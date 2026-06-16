@@ -6,7 +6,7 @@
 <title>HGE ROSTER</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Cinzel:wght@700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -14,7 +14,7 @@
   --c-border:#1C2D42;--c-border-bright:#2A4060;
   --gold:#C8922A;--gold-2:#E8B84B;--gold-3:#F5D78E;--gold-dim:#7A5520;--gold-bg:rgba(200,146,42,0.07);
   --silver:#8C9BAA;--silver-2:#B0BEC8;--red:#C0392B;--accent:#0BC4E3;
-  --font-ko:'Noto Sans KR',sans-serif;--font-en:'Rajdhani',sans-serif;
+  --font-ko:'Noto Sans KR',sans-serif;--font-en:'Rajdhani',sans-serif;--font-lol:'Cinzel','Rajdhani',serif;
   --radius:3px;--radius-lg:5px;
 }
 html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);color:var(--silver-2);-webkit-font-smoothing:antialiased}
@@ -27,18 +27,39 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
 .app{width:100%;max-width:420px;background:var(--c-panel);border:1px solid var(--c-border);border-radius:var(--radius-lg);overflow:hidden}
 
 /* 헤더 */
-.hdr{background:var(--c-surface);padding:22px 20px 18px;text-align:center;position:relative;border-bottom:1px solid var(--c-border)}
-.hdr::before,.hdr::after{content:'';position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold),transparent)}
+.hdr{position:relative;height:260px;overflow:hidden;border-bottom:2px solid #8A6020}
+.hdr::before,.hdr::after{content:'';position:absolute;top:0;bottom:0;width:3px;z-index:5;
+  background:linear-gradient(to bottom,transparent 0%,#C8922A 30%,#F5D78E 50%,#C8922A 70%,transparent 100%)}
 .hdr::before{left:0}.hdr::after{right:0}
-.hdr-orn{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.orn-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold-dim))}
-.orn-line.r{background:linear-gradient(to left,transparent,var(--gold-dim))}
-.orn-shape{display:flex;gap:4px;align-items:center}
-.orn-d{width:5px;height:5px;background:var(--gold);transform:rotate(45deg)}
-.orn-d.sm{width:3px;height:3px;background:var(--gold-dim)}
-.hdr-title{font-family:var(--font-en);font-size:26px;font-weight:700;color:var(--gold-2);letter-spacing:5px;line-height:1;text-shadow:0 0 30px rgba(200,146,42,0.35)}
-.hdr-sub{font-size:11px;font-weight:300;color:var(--silver);margin-top:6px;letter-spacing:2px}
-.hdr-season{display:inline-block;margin-top:8px;font-family:var(--font-en);font-size:10px;letter-spacing:2px;color:var(--gold-dim);border:1px solid var(--gold-dim);padding:2px 10px;border-radius:1px}
+.hdr-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hdr-content{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3;
+  background:linear-gradient(180deg,rgba(1,5,10,0.2) 0%,transparent 30%,transparent 60%,rgba(1,5,10,0.75) 100%)}
+.hdr-orn{display:flex;align-items:center;gap:10px;width:82%;margin-bottom:14px}
+.orn-line{flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(200,146,42,0.95))}
+.orn-line.r{background:linear-gradient(to left,transparent,rgba(200,146,42,0.95))}
+.orn-shape{display:flex;gap:5px;align-items:center;flex-shrink:0}
+.orn-d{width:8px;height:8px;background:#E8B84B;transform:rotate(45deg);box-shadow:0 0 12px rgba(232,184,75,1),0 0 4px #fff}
+.orn-d.sm{width:3px;height:3px;background:#7A5520;box-shadow:none}
+.hdr-title{
+  font-family:'Cinzel',serif;
+  font-size:80px;font-weight:900;letter-spacing:14px;line-height:1;
+  color:transparent;
+  background:linear-gradient(180deg,#FFFFFF 0%,#FFF8E0 8%,#F5D78E 28%,#E8B84B 52%,#C8922A 74%,#6B4210 100%);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-stroke:0px transparent;
+  filter:drop-shadow(0 0 35px rgba(200,146,42,0.95)) drop-shadow(0 0 12px rgba(255,200,80,0.5)) drop-shadow(0 5px 12px rgba(0,0,0,1));
+  position:relative}
+.hdr-title::before{
+  content:'HGE';
+  position:absolute;top:0;left:0;right:0;
+  background:none;-webkit-background-clip:unset;background-clip:unset;
+  color:transparent;
+  -webkit-text-stroke:2px rgba(200,146,42,0.3)}
+.hdr-sub{font-size:10px;font-weight:500;color:rgba(210,185,140,0.9);margin-top:10px;letter-spacing:4px;
+  text-shadow:0 1px 6px rgba(0,0,0,1),0 0 20px rgba(150,100,30,0.5)}
+.hdr-orn-bot{display:flex;align-items:center;gap:10px;width:82%;margin-top:14px}
+.hdr-orn-bot .orn-line{background:linear-gradient(to right,transparent,rgba(200,146,42,0.7))}
+.hdr-orn-bot .orn-line.r{background:linear-gradient(to left,transparent,rgba(200,146,42,0.7))}
 
 /* 스텝바 */
 .stepbar{display:flex;align-items:center;padding:11px 20px;background:var(--c-bg);border-bottom:1px solid var(--c-border)}
@@ -197,14 +218,21 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
 
 <!-- 헤더 -->
 <div class="hdr">
-  <div class="hdr-orn">
-    <div class="orn-line"></div>
-    <div class="orn-shape"><div class="orn-d sm"></div><div class="orn-d"></div><div class="orn-d sm"></div></div>
-    <div class="orn-line r"></div>
+  <canvas class="hdr-canvas" id="hdr-canvas"></canvas>
+  <div class="hdr-content">
+    <div class="hdr-orn">
+      <div class="orn-line"></div>
+      <div class="orn-shape"><div class="orn-d sm"></div><div class="orn-d"></div><div class="orn-d sm"></div></div>
+      <div class="orn-line r"></div>
+    </div>
+    <div class="hdr-title">HGE</div>
+    <div class="hdr-sub">한화손보 E-SPORTS 동아리</div>
+    <div class="hdr-orn-bot">
+      <div class="orn-line"></div>
+      <div class="orn-shape"><div class="orn-d sm"></div><div class="orn-d"></div><div class="orn-d sm"></div></div>
+      <div class="orn-line r"></div>
+    </div>
   </div>
-  <div class="hdr-title">HGE ROSTER</div>
-  <div class="hdr-sub">한화손보 리그 오브 레전드 동아리</div>
-  <div class="hdr-season">2025 SEASON</div>
 </div>
 
 <!-- 동기화 상태 -->
@@ -325,7 +353,7 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
 <div id="roster-list"></div>
 
 <div class="footer">
-  <div class="footer-txt">HGE · HANWHA LIFE INSURANCE LOL CLUB</div>
+  <div class="footer-txt">HGE · HANWHA LIFE INSURANCE E-SPORTS CLUB</div>
 </div>
 
 </div>
@@ -585,6 +613,91 @@ fetchRoster(false).then(function(){
 });
 
 })();
+
+/* ── 배경 이미지 fallback ── */
+(function(){
+  var C=document.getElementById('hdr-canvas');
+  if(!C)return;
+  var ctx=C.getContext('2d');
+  var W,H,tick=0;
+  var img=new Image();
+  img.src='rift.png';
+
+  function rand(a,b){return a+Math.random()*(b-a);}
+
+  /* 파티클 */
+  var pts=[];
+  for(var i=0;i<55;i++) pts.push({
+    x:rand(0,1),y:rand(0.3,1.1),
+    vx:rand(-0.0001,0.0001),vy:rand(-0.0006,-0.0001),
+    r:rand(0.4,1.8),life:rand(0,1),spd:rand(0.0015,0.005),
+    type:Math.random()
+  });
+
+  function resize(){
+    W=C.width=C.offsetWidth||420;
+    H=C.height=C.offsetHeight||260;
+  }
+
+  function drawFrame(){
+    ctx.clearRect(0,0,W,H);
+
+    /* 배경 이미지 — 중앙 크롭해서 꽉 채우기 */
+    if(img.complete && img.naturalWidth>0){
+      var iw=img.naturalWidth, ih=img.naturalHeight;
+      var scale=Math.max(W/iw, H/ih);
+      var dw=iw*scale, dh=ih*scale;
+      var dx=(W-dw)*0.5, dy=(H-dh)*0.38; /* 살짝 위쪽 중심 */
+      ctx.drawImage(img, dx, dy, dw, dh);
+    } else {
+      /* 이미지 로딩 전 fallback */
+      var bg=ctx.createLinearGradient(0,0,W,H);
+      bg.addColorStop(0,'#010a0e'); bg.addColorStop(1,'#041520');
+      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    }
+
+    /* 어두운 오버레이 — 텍스트 가독성 + 고급감 */
+    var ov=ctx.createLinearGradient(0,0,0,H);
+    ov.addColorStop(0,'rgba(1,6,12,0.62)');
+    ov.addColorStop(0.35,'rgba(1,6,12,0.28)');
+    ov.addColorStop(0.65,'rgba(1,6,12,0.22)');
+    ov.addColorStop(1,'rgba(1,6,12,0.70)');
+    ctx.fillStyle=ov; ctx.fillRect(0,0,W,H);
+
+    /* 좌우 비네트 */
+    var lv=ctx.createLinearGradient(0,0,W*0.3,0);
+    lv.addColorStop(0,'rgba(1,6,12,0.65)'); lv.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=lv; ctx.fillRect(0,0,W*0.3,H);
+    var rv=ctx.createLinearGradient(W*0.7,0,W,0);
+    rv.addColorStop(0,'rgba(0,0,0,0)'); rv.addColorStop(1,'rgba(1,6,12,0.65)');
+    ctx.fillStyle=rv; ctx.fillRect(W*0.7,0,W*0.3,H);
+
+    /* 파티클 */
+    pts.forEach(function(p){
+      p.life+=p.spd; p.x+=p.vx; p.y+=p.vy;
+      if(p.life>1||p.y<-0.05){p.life=0;p.x=rand(0,1);p.y=rand(0.7,1.1);}
+      var a=p.life<0.12?p.life/0.12:p.life>0.82?(1-p.life)/0.18:1;
+      var col=p.type<0.4?'rgba(80,180,255,':p.type<0.7?'rgba(220,160,40,':'rgba(120,230,140,';
+      ctx.save(); ctx.globalAlpha=a*0.7;
+      ctx.shadowBlur=7; ctx.shadowColor=col+'0.9)';
+      ctx.fillStyle=col+'0.9)';
+      ctx.beginPath(); ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  function animate(){
+    tick++;
+    drawFrame();
+    requestAnimationFrame(animate);
+  }
+
+  resize();
+  img.onload=function(){};
+  animate();
+  window.addEventListener('resize',function(){resize();});
+})();
+
 </script>
 </body>
 </html>
