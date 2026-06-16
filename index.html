@@ -27,7 +27,7 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
 .app{width:100%;max-width:420px;background:var(--c-panel);border:1px solid var(--c-border);border-radius:var(--radius-lg);overflow:hidden}
 
 /* 헤더 */
-.hdr{position:relative;height:260px;overflow:hidden;border-bottom:2px solid #8A6020}
+.hdr{position:relative;height:180px;overflow:hidden;border-bottom:2px solid #8A6020}
 .hdr::before,.hdr::after{content:'';position:absolute;top:0;bottom:0;width:3px;z-index:5;
   background:linear-gradient(to bottom,transparent 0%,#C8922A 30%,#F5D78E 50%,#C8922A 70%,transparent 100%)}
 .hdr::before{left:0}.hdr::after{right:0}
@@ -208,6 +208,60 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
   .wrap{padding:0}
   .app{max-width:100%;border:none;border-radius:0;min-height:100vh}
 }
+
+/* ── 탭 네비 ── */
+.app-tabs{display:flex;border-bottom:1px solid var(--c-border);background:var(--c-bg)}
+.app-tab{flex:1;padding:11px;text-align:center;font-size:11px;font-weight:700;letter-spacing:1.5px;font-family:var(--font-en);color:var(--silver);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;border-bottom:2px solid transparent}
+.app-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.app-tab:hover:not(.active){color:var(--silver-2)}
+.tab-pane{display:none}.tab-pane.active{display:block}
+/* ── MATCH 탭 스타일 ── */
+.match-sec{padding:16px 20px}
+.match-lbl{font-family:var(--font-en);font-size:10px;font-weight:700;color:var(--gold-dim);letter-spacing:2px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.match-lbl::after{content:'';flex:1;height:1px;background:var(--c-border)}
+.attend-list{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.attend-row{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--c-raised);border-radius:var(--radius);border:1px solid var(--c-border);cursor:pointer;transition:all .15s}
+.attend-row.checked{border-color:var(--gold-dim);background:rgba(200,146,42,0.07)}
+.attend-chk{width:16px;height:16px;border-radius:3px;border:1.5px solid var(--c-border-bright);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);transition:all .15s}
+.attend-row.checked .attend-chk{background:var(--gold-dim);border-color:var(--gold);color:var(--c-bg)}
+.attend-em{width:26px;height:26px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--font-en);flex-shrink:0}
+.attend-info{flex:1;min-width:0}
+.attend-name{font-size:12px;font-weight:500;color:var(--silver-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.attend-sub{font-size:10px;color:var(--silver);margin-top:1px}
+.pos-sel{font-size:10px;padding:3px 8px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);color:var(--silver);font-family:var(--font-ko);cursor:pointer;outline:none;flex-shrink:0}
+.attend-row.checked .pos-sel{border-color:var(--gold-dim);color:var(--gold-light)}
+.match-count{font-size:11px;color:var(--silver);text-align:center;padding:6px;margin-bottom:6px}
+.match-count span{color:var(--gold);font-weight:700}
+.team-result{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.team-card-blue{background:rgba(10,40,100,0.2);border:1px solid rgba(60,140,255,0.4);border-radius:var(--radius-lg);padding:12px}
+.team-card-red{background:rgba(100,10,10,0.2);border:1px solid rgba(255,60,60,0.4);border-radius:var(--radius-lg);padding:12px}
+.team-card-title{font-family:var(--font-en);font-size:11px;font-weight:700;letter-spacing:1.5px;margin-bottom:8px}
+.team-card-blue .team-card-title{color:#6AACE8}
+.team-card-red .team-card-title{color:#E06060}
+.team-member-row{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
+.team-member-row:last-child{border-bottom:none}
+.tm-pos{font-size:9px;padding:1px 5px;border-radius:2px;font-weight:700;font-family:var(--font-en);flex-shrink:0}
+.tm-pos-blue{background:rgba(60,140,255,0.2);color:#6AACE8}
+.tm-pos-red{background:rgba(255,60,60,0.2);color:#E06060}
+.tm-name{font-size:11px;color:var(--silver-2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tm-tier{font-size:9px;color:var(--silver)}
+.team-score-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.08)}
+.team-score-txt{font-size:10px;color:var(--silver)}
+.team-score-val{font-size:12px;font-weight:700;font-family:var(--font-en)}
+.balance-bar{margin:12px 0;background:var(--c-raised);border-radius:20px;height:6px;overflow:hidden;display:flex}
+.balance-blue{background:linear-gradient(to right,#1a5080,#3a90e0);transition:width .4s}
+.balance-red{background:linear-gradient(to left,#801a1a,#e04040);transition:width .4s}
+.balance-label{display:flex;justify-content:space-between;font-size:10px;color:var(--silver);margin-top:4px}
+.copy-btn{width:100%;padding:11px;background:transparent;border:1px solid var(--gold);border-radius:var(--radius);color:var(--gold);font-size:12px;font-weight:700;font-family:var(--font-ko);letter-spacing:1px;cursor:pointer;margin-top:10px;transition:all .2s}
+.copy-btn:hover{background:rgba(200,146,42,0.12)}
+.copy-btn:active{transform:scale(.98)}
+.retry-btn{width:100%;padding:10px;background:transparent;border:1px solid var(--c-border-bright);border-radius:var(--radius);color:var(--silver);font-size:12px;font-weight:500;font-family:var(--font-ko);cursor:pointer;margin-top:6px;transition:all .2s}
+.retry-btn:hover{border-color:var(--silver);color:var(--silver-2)}
+.match-assign-btn{width:100%;padding:13px;background:var(--gold-dim);border:none;border-radius:var(--radius);color:var(--gold-3);font-size:13px;font-weight:700;font-family:var(--font-ko);letter-spacing:1px;cursor:pointer;transition:all .2s}
+.match-assign-btn:hover:not(:disabled){background:var(--gold);color:var(--c-bg)}
+.match-assign-btn:disabled{background:var(--c-border);color:var(--c-border-bright);cursor:default}
+.match-assign-btn:active:not(:disabled){transform:scale(.98)}
+.empty-match{text-align:center;padding:20px;color:var(--c-border-bright);font-size:12px;font-weight:300}
 </style>
 </head>
 <body>
@@ -235,7 +289,14 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
   </div>
 </div>
 
+<!-- 탭 네비 -->
+<div class="app-tabs">
+  <button class="app-tab active" id="tab-roster" onclick="switchTab('roster')">ROSTER</button>
+  <button class="app-tab" id="tab-match" onclick="switchTab('match')">MATCH</button>
+</div>
+
 <!-- 동기화 상태 -->
+<div class="tab-pane active" id="pane-roster">
 <div class="sync-bar">
   <div class="sync-dot loading" id="sync-dot"></div>
   <span class="sync-txt" id="sync-txt">CONNECTING...</span>
@@ -351,6 +412,52 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
 </div>
 
 <div id="roster-list"></div>
+
+</div>
+
+<!-- MATCH 탭 -->
+<div class="tab-pane" id="pane-match">
+  <div class="match-sec">
+    <div class="match-lbl">오늘 참석자 체크</div>
+    <div class="match-count" id="match-count">참석 <span id="attend-cnt">0</span>명 / 10명</div>
+    <div class="attend-list" id="attend-list">
+      <div class="empty-match">ROSTER 탭에서 멤버를 먼저 등록해 주세요</div>
+    </div>
+    <button class="match-assign-btn" id="assign-btn" disabled onclick="assignTeams()">자동 팀 배정하기</button>
+  </div>
+
+  <div class="match-sec" id="result-section" style="display:none;padding-top:0">
+    <div class="match-lbl" style="margin-top:4px">팀 배정 결과</div>
+    <div class="balance-bar">
+      <div class="balance-blue" id="bal-blue" style="width:50%"></div>
+      <div class="balance-red" id="bal-red" style="width:50%"></div>
+    </div>
+    <div class="balance-label">
+      <span id="bal-blue-txt">블루 0점</span>
+      <span id="bal-red-txt">레드 0점</span>
+    </div>
+    <div class="team-result">
+      <div class="team-card-blue">
+        <div class="team-card-title">BLUE TEAM</div>
+        <div id="blue-members"></div>
+        <div class="team-score-row">
+          <span class="team-score-txt">팀 점수</span>
+          <span class="team-score-val" id="blue-score" style="color:#6AACE8">0</span>
+        </div>
+      </div>
+      <div class="team-card-red">
+        <div class="team-card-title">RED TEAM</div>
+        <div id="red-members"></div>
+        <div class="team-score-row">
+          <span class="team-score-txt">팀 점수</span>
+          <span class="team-score-val" id="red-score" style="color:#E06060">0</span>
+        </div>
+      </div>
+    </div>
+    <button class="retry-btn" onclick="assignTeams()">다시 배정하기</button>
+    <button class="copy-btn" onclick="copyResult()">카톡 복사하기</button>
+  </div>
+</div>
 
 <div class="footer">
   <div class="footer-txt">HGE · HANWHA INSURANCE E-SPORTS CLUB</div>
@@ -605,6 +712,11 @@ window.selMainPos = selMainPos;
 window.selSubPos = selSubPos;
 window.confirmAdd = confirmAdd;
 window.removeMember = removeMember;
+  window.switchTab = switchTab;
+  window.toggleAttend = toggleAttend;
+  window.changePos = changePos;
+  window.assignTeams = assignTeams;
+  window.copyResult = copyResult;
 
 /* ── 초기화 ── */
 $id('loading-bar').style.display = 'block';
@@ -614,86 +726,290 @@ fetchRoster(false).then(function(){
 
 })();
 
-/* ── 배경 이미지 fallback ── */
+/* ── HGE 헤더 배경 Canvas ── */
 (function(){
   var C=document.getElementById('hdr-canvas');
   if(!C)return;
   var ctx=C.getContext('2d');
   var W,H,tick=0;
-  var img=new Image();
-  img.src='rift.png';
-
   function rand(a,b){return a+Math.random()*(b-a);}
+
+  /* 육각형 격자 */
+  var hexes=[];
+  function buildHexes(){
+    hexes=[];
+    var size=28, dx=size*Math.sqrt(3), dy=size*1.5;
+    for(var row=-1;row<Math.ceil(H/dy)+2;row++){
+      for(var col=-1;col<Math.ceil(W/dx)+2;col++){
+        var ox=(row%2===0)?0:dx*0.5;
+        hexes.push({
+          x:col*dx+ox, y:row*dy,
+          pulse:rand(0,Math.PI*2),
+          speed:rand(0.005,0.018),
+          bright:rand(0,1)
+        });
+      }
+    }
+  }
 
   /* 파티클 */
   var pts=[];
-  for(var i=0;i<55;i++) pts.push({
-    x:rand(0,1),y:rand(0.3,1.1),
-    vx:rand(-0.0001,0.0001),vy:rand(-0.0006,-0.0001),
-    r:rand(0.4,1.8),life:rand(0,1),spd:rand(0.0015,0.005),
+  for(var i=0;i<60;i++) pts.push({
+    x:rand(0,1), y:rand(0,1),
+    vy:rand(-0.0008,-0.0002),
+    vx:rand(-0.0002,0.0002),
+    r:rand(0.4,1.8),
+    life:rand(0,1), spd:rand(0.0015,0.005),
     type:Math.random()
   });
+
+  /* 유성 */
+  var meteors=[];
+  function spawnMeteor(){
+    meteors.push({
+      x:rand(0.2,1.2), y:rand(-0.1,0.3),
+      vx:-rand(0.004,0.009), vy:rand(0.002,0.005),
+      len:rand(0.06,0.14), life:1, alpha:rand(0.5,0.9)
+    });
+  }
+  spawnMeteor(); spawnMeteor();
 
   function resize(){
     W=C.width=C.offsetWidth||420;
     H=C.height=C.offsetHeight||260;
+    buildHexes();
   }
 
-  function drawFrame(){
-    ctx.clearRect(0,0,W,H);
+  function drawBg(){
+    /* 심층 배경 그라데이션 */
+    var bg=ctx.createLinearGradient(0,0,W,H);
+    bg.addColorStop(0,'#010608');
+    bg.addColorStop(0.3,'#020c14');
+    bg.addColorStop(0.6,'#041018');
+    bg.addColorStop(1,'#020810');
+    ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
-    /* 배경 이미지 — 중앙 크롭해서 꽉 채우기 */
-    if(img.complete && img.naturalWidth>0){
-      var iw=img.naturalWidth, ih=img.naturalHeight;
-      var scale=Math.max(W/iw, H/ih);
-      var dw=iw*scale, dh=ih*scale;
-      var dx=(W-dw)*0.5, dy=(H-dh)*0.38; /* 살짝 위쪽 중심 */
-      ctx.drawImage(img, dx, dy, dw, dh);
-    } else {
-      /* 이미지 로딩 전 fallback */
-      var bg=ctx.createLinearGradient(0,0,W,H);
-      bg.addColorStop(0,'#010a0e'); bg.addColorStop(1,'#041520');
-      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+    /* 좌하 블루 앰비언트 */
+    var amb1=ctx.createRadialGradient(0,H,0,0,H,W*0.6);
+    amb1.addColorStop(0,'rgba(10,40,100,0.35)');
+    amb1.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=amb1; ctx.fillRect(0,0,W,H);
+
+    /* 우상 골드 앰비언트 */
+    var amb2=ctx.createRadialGradient(W,0,0,W,0,W*0.55);
+    amb2.addColorStop(0,'rgba(120,70,10,0.28)');
+    amb2.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=amb2; ctx.fillRect(0,0,W,H);
+
+    /* 중앙 미묘한 글로우 */
+    var cg=ctx.createRadialGradient(W*0.5,H*0.55,0,W*0.5,H*0.55,W*0.45);
+    cg.addColorStop(0,'rgba(15,35,60,0.4)');
+    cg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=cg; ctx.fillRect(0,0,W,H);
+  }
+
+  function drawHexGrid(){
+    var t=tick;
+    hexes.forEach(function(h){
+      var phase=h.pulse+t*h.speed;
+      var brightness=0.5+0.5*Math.sin(phase);
+      brightness=brightness*h.bright;
+
+      /* 극히 어두운 선만 */
+      var alpha=0.02+brightness*0.07;
+      if(alpha<0.015) return;
+
+      ctx.save();
+      ctx.globalAlpha=alpha;
+      /* 위치에 따라 색 결정 — 좌하=블루 우상=골드 중앙=틸 */
+      var nx=h.x/W, ny=h.y/H;
+      var r,g,b;
+      if(nx+ny<0.8){r=20;g=60;b=160;}
+      else if(nx+ny>1.2){r=160;g=100;b=20;}
+      else{r=20;g=100;b=140;}
+      ctx.strokeStyle='rgb('+r+','+g+','+b+')';
+      ctx.lineWidth=0.6;
+
+      /* 육각형 그리기 */
+      var s=28;
+      ctx.beginPath();
+      for(var k=0;k<6;k++){
+        var angle=Math.PI/180*(60*k-30);
+        var hx=h.x+s*Math.cos(angle);
+        var hy=h.y+s*Math.sin(angle);
+        if(k===0) ctx.moveTo(hx,hy); else ctx.lineTo(hx,hy);
+      }
+      ctx.closePath(); ctx.stroke();
+
+      /* 가끔 꼭짓점에 점 */
+      if(brightness>0.85){
+        ctx.globalAlpha=brightness*0.18;
+        ctx.fillStyle='rgb('+(r+60)+','+(g+40)+','+(b+40)+')';
+        ctx.beginPath(); ctx.arc(h.x,h.y,1.2,0,Math.PI*2); ctx.fill();
+      }
+      ctx.restore();
+    });
+  }
+
+  function drawLines(){
+    /* 수평 스캔라인 — 매우 미묘 */
+    for(var i=0;i<H;i+=4){
+      ctx.save();
+      ctx.globalAlpha=0.018;
+      ctx.strokeStyle='rgba(200,160,60,0.5)';
+      ctx.lineWidth=0.5;
+      ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(W,i); ctx.stroke();
+      ctx.restore();
     }
 
-    /* 어두운 오버레이 — 텍스트 가독성 + 고급감 */
-    var ov=ctx.createLinearGradient(0,0,0,H);
-    ov.addColorStop(0,'rgba(1,6,12,0.62)');
-    ov.addColorStop(0.35,'rgba(1,6,12,0.28)');
-    ov.addColorStop(0.65,'rgba(1,6,12,0.22)');
-    ov.addColorStop(1,'rgba(1,6,12,0.70)');
-    ctx.fillStyle=ov; ctx.fillRect(0,0,W,H);
+    /* 대각선 빛줄기 2개 */
+    [[0.15,0,0.85,1],[0.05,0,0.6,1]].forEach(function(l,i){
+      var grd=ctx.createLinearGradient(W*l[0],H*l[1],W*l[2],H*l[3]);
+      grd.addColorStop(0,'rgba(180,130,30,0)');
+      grd.addColorStop(0.4,'rgba(200,150,40,0.06)');
+      grd.addColorStop(0.6,'rgba(200,150,40,0.06)');
+      grd.addColorStop(1,'rgba(180,130,30,0)');
+      ctx.save(); ctx.globalAlpha=1;
+      ctx.fillStyle=grd;
+      ctx.save();
+      ctx.translate(W*(l[0]+l[2])*0.5, H*0.5);
+      ctx.rotate(-0.52);
+      ctx.fillRect(-W*0.04,-H*0.8,W*0.08,H*1.6);
+      ctx.restore();
+      ctx.restore();
+    });
+  }
 
-    /* 좌우 비네트 */
-    var lv=ctx.createLinearGradient(0,0,W*0.3,0);
-    lv.addColorStop(0,'rgba(1,6,12,0.65)'); lv.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=lv; ctx.fillRect(0,0,W*0.3,H);
-    var rv=ctx.createLinearGradient(W*0.7,0,W,0);
-    rv.addColorStop(0,'rgba(0,0,0,0)'); rv.addColorStop(1,'rgba(1,6,12,0.65)');
-    ctx.fillStyle=rv; ctx.fillRect(W*0.7,0,W*0.3,H);
+  function drawRunes(){
+    /* 중앙 원형 룬 장식 */
+    var cx=W*0.5, cy=H*0.52;
+    var pulse=0.7+0.3*Math.sin(tick*0.025);
 
-    /* 파티클 */
+    /* 바깥 원 */
+    ctx.save();
+    ctx.globalAlpha=0.08*pulse;
+    ctx.strokeStyle='rgba(200,146,42,0.9)';
+    ctx.lineWidth=0.8;
+    ctx.setLineDash([4,8]);
+    ctx.beginPath(); ctx.arc(cx,cy,H*0.38,0,Math.PI*2); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    /* 안쪽 원 */
+    ctx.save();
+    ctx.globalAlpha=0.12*pulse;
+    ctx.strokeStyle='rgba(180,130,40,0.8)';
+    ctx.lineWidth=0.6;
+    ctx.beginPath(); ctx.arc(cx,cy,H*0.22,0,Math.PI*2); ctx.stroke();
+    ctx.restore();
+
+    /* 회전하는 룬 삼각형 */
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(tick*0.004);
+    ctx.globalAlpha=0.07;
+    ctx.strokeStyle='rgba(200,146,42,1)';
+    ctx.lineWidth=0.7;
+    ctx.beginPath();
+    for(var k=0;k<3;k++){
+      var a=Math.PI*2/3*k-Math.PI/2;
+      var rx=H*0.3*Math.cos(a), ry=H*0.3*Math.sin(a);
+      if(k===0) ctx.moveTo(rx,ry); else ctx.lineTo(rx,ry);
+    }
+    ctx.closePath(); ctx.stroke();
+    ctx.restore();
+
+    /* 역방향 삼각형 */
+    ctx.save();
+    ctx.translate(cx,cy);
+    ctx.rotate(-tick*0.004+Math.PI/3);
+    ctx.globalAlpha=0.05;
+    ctx.strokeStyle='rgba(60,140,220,0.9)';
+    ctx.lineWidth=0.7;
+    ctx.beginPath();
+    for(var k=0;k<3;k++){
+      var a=Math.PI*2/3*k-Math.PI/2;
+      var rx=H*0.3*Math.cos(a), ry=H*0.3*Math.sin(a);
+      if(k===0) ctx.moveTo(rx,ry); else ctx.lineTo(rx,ry);
+    }
+    ctx.closePath(); ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawMeteors(){
+    meteors.forEach(function(m,i){
+      m.x+=m.vx; m.y+=m.vy; m.life-=0.008;
+      if(m.life<=0) meteors[i]=null;
+      if(!m) return;
+      var tx=m.x+m.len, ty=m.y-m.len*0.4;
+      var grd=ctx.createLinearGradient(tx*W,ty*H,m.x*W,m.y*H);
+      grd.addColorStop(0,'rgba(255,240,200,0)');
+      grd.addColorStop(0.6,'rgba(240,210,140,'+m.life*m.alpha*0.7+')');
+      grd.addColorStop(1,'rgba(255,255,220,'+m.life*m.alpha+')');
+      ctx.save();
+      ctx.strokeStyle=grd; ctx.lineWidth=1.2;
+      ctx.shadowBlur=4; ctx.shadowColor='rgba(255,230,150,0.6)';
+      ctx.beginPath(); ctx.moveTo(tx*W,ty*H); ctx.lineTo(m.x*W,m.y*H); ctx.stroke();
+      ctx.restore();
+    });
+    meteors=meteors.filter(Boolean);
+    if(meteors.length<3 && Math.random()<0.004) spawnMeteor();
+  }
+
+  function drawParticles(){
     pts.forEach(function(p){
-      p.life+=p.spd; p.x+=p.vx; p.y+=p.vy;
-      if(p.life>1||p.y<-0.05){p.life=0;p.x=rand(0,1);p.y=rand(0.7,1.1);}
-      var a=p.life<0.12?p.life/0.12:p.life>0.82?(1-p.life)/0.18:1;
-      var col=p.type<0.4?'rgba(80,180,255,':p.type<0.7?'rgba(220,160,40,':'rgba(120,230,140,';
-      ctx.save(); ctx.globalAlpha=a*0.7;
-      ctx.shadowBlur=7; ctx.shadowColor=col+'0.9)';
+      p.life+=p.spd;
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.life>1||p.x<0||p.x>1||p.y<0){
+        p.life=0; p.x=rand(0,1); p.y=rand(0.6,1.1);
+        p.vx=rand(-0.0002,0.0002); p.vy=rand(-0.0008,-0.0002);
+      }
+      var a=p.life<0.1?p.life/0.1:p.life>0.85?(1-p.life)/0.15:1;
+      var col=p.type<0.45?'rgba(220,165,40,':'p.type<0.7?'rgba(80,180,240,':'rgba(140,210,140,';
+      col=p.type<0.45?'rgba(220,165,40,':p.type<0.7?'rgba(80,180,240,':'rgba(140,210,140,';
+      ctx.save(); ctx.globalAlpha=a*0.65;
+      ctx.shadowBlur=6; ctx.shadowColor=col+'0.9)';
       ctx.fillStyle=col+'0.9)';
       ctx.beginPath(); ctx.arc(p.x*W,p.y*H,p.r,0,Math.PI*2); ctx.fill();
       ctx.restore();
     });
   }
 
+  function drawVignette(){
+    /* 강한 비네트 — 경계 어둡게 */
+    var vig=ctx.createRadialGradient(W*0.5,H*0.5,H*0.1,W*0.5,H*0.5,W*0.75);
+    vig.addColorStop(0,'rgba(0,0,0,0)');
+    vig.addColorStop(0.7,'rgba(0,0,0,0.15)');
+    vig.addColorStop(1,'rgba(0,0,0,0.82)');
+    ctx.fillStyle=vig; ctx.fillRect(0,0,W,H);
+
+    /* 상단 어두운 안개 (텍스트 가독성) */
+    var top=ctx.createLinearGradient(0,0,0,H*0.5);
+    top.addColorStop(0,'rgba(1,4,8,0.5)');
+    top.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=top; ctx.fillRect(0,0,W,H*0.5);
+
+    /* 하단도 */
+    var bot=ctx.createLinearGradient(0,H*0.6,0,H);
+    bot.addColorStop(0,'rgba(0,0,0,0)');
+    bot.addColorStop(1,'rgba(1,4,8,0.55)');
+    ctx.fillStyle=bot; ctx.fillRect(0,H*0.6,W,H*0.4);
+  }
+
   function animate(){
     tick++;
-    drawFrame();
+    ctx.clearRect(0,0,W,H);
+    drawBg();
+    drawHexGrid();
+    drawLines();
+    drawRunes();
+    drawMeteors();
+    drawParticles();
+    drawVignette();
     requestAnimationFrame(animate);
   }
 
   resize();
-  img.onload=function(){};
   animate();
   window.addEventListener('resize',function(){resize();});
 })();
