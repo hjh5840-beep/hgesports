@@ -217,71 +217,86 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
 .app-tab:hover:not(.active){color:var(--silver-2)}
 .tab-pane{display:none}.tab-pane.active{display:block}
 /* ── MATCH 탭 스타일 ── */
-.match-sec{padding:16px 20px}
-.match-lbl{font-family:var(--font-en);font-size:10px;font-weight:700;color:var(--gold-dim);letter-spacing:2px;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.match-sec{padding:14px 18px}
+.match-lbl{font-family:var(--font-en);font-size:10px;font-weight:700;color:var(--gold-dim);letter-spacing:2px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .match-lbl::after{content:'';flex:1;height:1px;background:var(--c-border)}
-.attend-list{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
-.attend-row{background:var(--c-raised);border-radius:var(--radius);border:1px solid var(--c-border);transition:all .15s;overflow:hidden}
-.attend-top{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer}
-.attend-row.checked{border-color:var(--gold-dim);background:rgba(200,146,42,0.06)}
+.mode-row{display:flex;gap:6px;margin-bottom:12px}
+.mode-btn{flex:1;padding:9px 6px;background:var(--c-raised);border:1px solid var(--c-border);border-radius:var(--radius);font-size:12px;font-weight:700;font-family:var(--font-ko);color:var(--silver);cursor:pointer;transition:all .15s;text-align:center}
+.mode-btn:hover{border-color:var(--gold-dim);color:var(--silver-2)}
+.mode-btn.active{border-color:var(--gold);background:rgba(200,146,42,0.1);color:var(--gold)}
+.match-count{font-size:11px;color:var(--silver);text-align:center;padding:4px;margin-bottom:6px}
+.match-count span{color:var(--gold);font-weight:700}
+.attend-list{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.attend-row{background:var(--c-raised);border-radius:var(--radius);border:1px solid var(--c-border);transition:border-color .15s,background .15s;overflow:hidden}
+.attend-row.checked{border-color:var(--gold-dim);background:rgba(200,146,42,0.05)}
+.attend-top{display:flex;align-items:center;gap:8px;padding:8px 10px;cursor:pointer;user-select:none}
 .attend-chk{width:16px;height:16px;border-radius:3px;border:1.5px solid var(--c-border-bright);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--gold);transition:all .15s}
 .attend-row.checked .attend-chk{background:var(--gold-dim);border-color:var(--gold);color:var(--c-bg)}
 .attend-em{width:24px;height:24px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;font-family:var(--font-en);flex-shrink:0}
 .attend-info{flex:1;min-width:0}
 .attend-name{font-size:12px;font-weight:500;color:var(--silver-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .attend-sub{font-size:9px;color:var(--silver);margin-top:1px}
-.attend-pos-row{display:none;padding:0 10px 8px;gap:5px}
+.attend-pos-row{display:none;padding:0 10px 8px;gap:5px;align-items:center}
 .attend-row.checked .attend-pos-row{display:flex}
-.pos-label{font-size:9px;color:var(--silver);width:38px;flex-shrink:0;display:flex;align-items:center}
-.pos-label .star{color:var(--gold);margin-right:2px;font-size:8px}
+.pos-label{font-size:9px;color:var(--silver);width:36px;flex-shrink:0}
+.pos-label .star{color:var(--gold);margin-right:1px}
 .pos-sel{flex:1;font-size:11px;padding:4px 6px;background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);color:var(--silver-2);font-family:var(--font-ko);cursor:pointer;outline:none}
 .pos-sel:focus{border-color:var(--gold-dim)}
-.match-count{font-size:11px;color:var(--silver);text-align:center;padding:5px;margin-bottom:4px}
-.match-count span{color:var(--gold);font-weight:700}
-.team-result{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
-.team-card-blue{background:rgba(10,40,100,0.2);border:1px solid rgba(60,140,255,0.4);border-radius:var(--radius-lg);padding:10px}
-.team-card-red{background:rgba(100,10,10,0.2);border:1px solid rgba(255,60,60,0.4);border-radius:var(--radius-lg);padding:10px}
-.team-card-title{font-family:var(--font-en);font-size:11px;font-weight:700;letter-spacing:1.5px;margin-bottom:8px}
-.team-card-blue .team-card-title{color:#6AACE8}
-.team-card-red .team-card-title{color:#E06060}
-.team-member-row{display:flex;align-items:center;gap:5px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.05)}
-.team-member-row:last-child{border-bottom:none}
-.tm-pos{font-size:9px;padding:1px 4px;border-radius:2px;font-weight:700;font-family:var(--font-ko);flex-shrink:0;min-width:26px;text-align:center}
-.tm-pos-blue{background:rgba(60,140,255,0.18);color:#6AACE8}
-.tm-pos-red{background:rgba(255,60,60,0.18);color:#E06060}
-.tm-name{font-size:11px;color:var(--silver-2);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.match-assign-btn{width:100%;padding:12px;background:var(--gold-dim);border:none;border-radius:var(--radius);color:var(--gold-3);font-size:13px;font-weight:700;font-family:var(--font-ko);letter-spacing:1px;cursor:pointer;transition:all .2s}
+.match-assign-btn:hover:not(:disabled){background:var(--gold);color:var(--c-bg)}
+.match-assign-btn:disabled{background:var(--c-border);color:var(--c-border-bright);cursor:not-allowed}
+.match-assign-btn:active:not(:disabled){transform:scale(.98)}
+.result-sec{padding:0 18px 14px}
+.team-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.team-grid-4{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.tc{border-radius:var(--radius-lg);padding:10px}
+.tc-blue{background:rgba(10,40,100,0.25);border:1px solid rgba(60,140,255,0.45)}
+.tc-red{background:rgba(100,10,10,0.25);border:1px solid rgba(255,60,60,0.45)}
+.tc-green{background:rgba(10,80,30,0.25);border:1px solid rgba(60,200,80,0.45)}
+.tc-purple{background:rgba(60,10,100,0.25);border:1px solid rgba(160,80,255,0.45)}
+.tc-title{font-family:var(--font-en);font-size:10px;font-weight:700;letter-spacing:1.5px;margin-bottom:7px}
+.tc-blue .tc-title{color:#6AACE8}
+.tc-red .tc-title{color:#E06060}
+.tc-green .tc-title{color:#50C860}
+.tc-purple .tc-title{color:#C080FF}
+.tm-row{display:flex;align-items:center;gap:4px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.tm-row:last-child{border-bottom:none}
+.tm-pos{font-size:9px;padding:1px 4px;border-radius:2px;font-weight:700;min-width:24px;text-align:center;flex-shrink:0}
+.tm-pos-b{background:rgba(60,140,255,0.18);color:#6AACE8}
+.tm-pos-r{background:rgba(255,60,60,0.18);color:#E06060}
+.tm-pos-g{background:rgba(60,200,80,0.18);color:#50C860}
+.tm-pos-p{background:rgba(160,80,255,0.18);color:#C080FF}
+.tm-name{font-size:11px;color:var(--silver-2);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tm-tier{font-size:9px;color:var(--silver);flex-shrink:0}
-.tm-win{font-size:9px;flex-shrink:0}
-.team-score-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08)}
-.team-score-txt{font-size:10px;color:var(--silver)}
-.team-score-val{font-size:12px;font-weight:700;font-family:var(--font-en)}
-.balance-bar{margin:10px 0 0;background:var(--c-raised);border-radius:20px;height:5px;overflow:hidden;display:flex}
+.tc-score{font-size:10px;color:var(--silver);margin-top:6px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.06);display:flex;justify-content:space-between}
+.tc-score span{font-weight:700;font-family:var(--font-en)}
+.tc-blue .tc-score span{color:#6AACE8}
+.tc-red .tc-score span{color:#E06060}
+.tc-green .tc-score span{color:#50C860}
+.tc-purple .tc-score span{color:#C080FF}
+.balance-wrap{margin-top:10px}
+.balance-bar{background:var(--c-raised);border-radius:20px;height:5px;overflow:hidden;display:flex}
 .balance-blue{background:linear-gradient(to right,#1a5080,#3a90e0);transition:width .4s}
 .balance-red{background:linear-gradient(to left,#801a1a,#e04040);transition:width .4s}
 .balance-label{display:flex;justify-content:space-between;font-size:10px;color:var(--silver);margin-top:3px}
-.lane-analysis{margin-top:12px;background:var(--c-raised);border-radius:var(--radius-lg);border:1px solid var(--c-border);overflow:hidden}
-.lane-analysis-title{font-family:var(--font-en);font-size:9px;font-weight:700;letter-spacing:2px;color:var(--gold-dim);padding:7px 10px;border-bottom:1px solid var(--c-border)}
-.lane-row{display:flex;align-items:center;padding:6px 10px;border-bottom:1px solid rgba(255,255,255,0.04);gap:6px}
+.lane-analysis{margin-top:10px;background:var(--c-raised);border-radius:var(--radius-lg);border:1px solid var(--c-border);overflow:hidden}
+.lane-analysis-title{font-family:var(--font-en);font-size:9px;font-weight:700;letter-spacing:2px;color:var(--gold-dim);padding:6px 10px;border-bottom:1px solid var(--c-border)}
+.lane-row{display:flex;align-items:center;padding:5px 10px;border-bottom:1px solid rgba(255,255,255,0.03);gap:6px}
 .lane-row:last-child{border-bottom:none}
-.lane-nm{font-size:10px;font-weight:700;font-family:var(--font-ko);color:var(--silver);width:28px;flex-shrink:0}
-.lane-bar-wrap{flex:1;display:flex;height:5px;border-radius:3px;overflow:hidden;background:var(--c-surface)}
+.lane-nm{font-size:10px;font-weight:700;color:var(--silver);width:28px;flex-shrink:0}
+.lane-bar-wrap{flex:1;display:flex;height:4px;border-radius:2px;overflow:hidden;background:var(--c-surface)}
 .lane-bar-b{background:#3a90e0;transition:width .4s}
 .lane-bar-r{background:#e04040;transition:width .4s}
-.lane-result{font-size:9px;font-weight:700;flex-shrink:0;min-width:28px;text-align:right}
+.lane-result{font-size:9px;font-weight:700;flex-shrink:0;min-width:38px;text-align:right}
 .lane-result.blue-win{color:#6AACE8}
 .lane-result.red-win{color:#E06060}
 .lane-result.draw{color:var(--silver)}
-.copy-btn{width:100%;padding:11px;background:transparent;border:1px solid var(--gold);border-radius:var(--radius);color:var(--gold);font-size:12px;font-weight:700;font-family:var(--font-ko);letter-spacing:1px;cursor:pointer;margin-top:10px;transition:all .2s}
+.retry-btn{width:100%;padding:9px;background:transparent;border:1px solid var(--c-border-bright);border-radius:var(--radius);color:var(--silver);font-size:12px;font-weight:500;font-family:var(--font-ko);cursor:pointer;margin-top:8px;transition:all .2s}
+.retry-btn:hover{border-color:var(--silver);color:var(--silver-2)}
+.copy-btn{width:100%;padding:11px;background:transparent;border:1px solid var(--gold);border-radius:var(--radius);color:var(--gold);font-size:12px;font-weight:700;font-family:var(--font-ko);letter-spacing:1px;cursor:pointer;margin-top:6px;transition:all .2s}
 .copy-btn:hover{background:rgba(200,146,42,0.12)}
 .copy-btn:active{transform:scale(.98)}
-.retry-btn{width:100%;padding:9px;background:transparent;border:1px solid var(--c-border-bright);border-radius:var(--radius);color:var(--silver);font-size:12px;font-weight:500;font-family:var(--font-ko);cursor:pointer;margin-top:6px;transition:all .2s}
-.retry-btn:hover{border-color:var(--silver);color:var(--silver-2)}
-.match-assign-btn{width:100%;padding:13px;background:var(--gold-dim);border:none;border-radius:var(--radius);color:var(--gold-3);font-size:13px;font-weight:700;font-family:var(--font-ko);letter-spacing:1px;cursor:pointer;transition:all .2s}
-.match-assign-btn:hover:not(:disabled){background:var(--gold);color:var(--c-bg)}
-.match-assign-btn:disabled{background:var(--c-border);color:var(--c-border-bright);cursor:default}
-.match-assign-btn:active:not(:disabled){transform:scale(.98)}
-.empty-match{text-align:center;padding:20px;color:var(--c-border-bright);font-size:12px;font-weight:300}
-
+.empty-match{text-align:center;padding:18px;color:var(--c-border-bright);font-size:12px;font-weight:300}
 /* ── 관리자 ── */
 .admin-bar{padding:10px 20px;border-top:1px solid var(--c-border);text-align:center}
 .admin-toggle{background:none;border:none;color:var(--c-border-bright);font-size:10px;font-family:var(--font-ko);letter-spacing:.5px;cursor:pointer;padding:4px 8px;border-radius:var(--radius);transition:color .2s}
@@ -453,46 +468,75 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
 <!-- MATCH 탭 -->
 <div class="tab-pane" id="pane-match">
   <div class="match-sec">
-    <div class="match-lbl">오늘 참석자 체크</div>
-    <div class="match-count">참석 <span id="attend-cnt">0</span>명 · 2명 이상이면 배정 가능</div>
+    <div class="match-lbl">내전 모드 선택</div>
+    <div class="mode-row">
+      <button class="mode-btn active" id="mode-10" onclick="setMode(10)">5 vs 5<br><span style="font-size:9px;font-weight:400;opacity:.7">10명 내전</span></button>
+      <button class="mode-btn" id="mode-20" onclick="setMode(20)">5v5 vs 5v5<br><span style="font-size:9px;font-weight:400;opacity:.7">20명 내전 (4팀)</span></button>
+    </div>
+    <div class="match-lbl">참석자 체크</div>
+    <div class="match-count">참석 <span id="attend-cnt">0</span>명 · <span id="need-txt">10명이면 배정 가능</span></div>
     <div class="attend-list" id="attend-list">
       <div class="empty-match">ROSTER 탭에서 멤버를 먼저 등록해 주세요</div>
     </div>
-    <button class="match-assign-btn" id="assign-btn" disabled onclick="assignTeams()">자동 팀 배정하기</button>
+    <button class="match-assign-btn" id="assign-btn" onclick="assignTeams()" disabled>자동 팀 배정하기</button>
   </div>
 
-  <div class="match-sec" id="result-section" style="display:none;padding-top:0">
+  <div class="result-sec" id="result-section" style="display:none">
     <div class="match-lbl" style="margin-top:4px">팀 배정 결과</div>
-    <div class="balance-bar">
-      <div class="balance-blue" id="bal-blue" style="width:50%"></div>
-      <div class="balance-red" id="bal-red" style="width:50%"></div>
-    </div>
-    <div class="balance-label">
-      <span id="bal-blue-txt">블루 0점</span>
-      <span id="bal-red-txt">레드 0점</span>
-    </div>
-    <div class="team-result">
-      <div class="team-card-blue">
-        <div class="team-card-title">BLUE TEAM</div>
-        <div id="blue-members"></div>
-        <div class="team-score-row">
-          <span class="team-score-txt">팀 점수</span>
-          <span class="team-score-val" id="blue-score" style="color:#6AACE8">0</span>
+
+    <!-- 2팀 결과 (10명 모드) -->
+    <div id="result-2team">
+      <div class="balance-wrap">
+        <div class="balance-bar">
+          <div class="balance-blue" id="bal-blue" style="width:50%"></div>
+          <div class="balance-red" id="bal-red" style="width:50%"></div>
+        </div>
+        <div class="balance-label"><span id="bal-blue-txt">블루 0점</span><span id="bal-red-txt">레드 0점</span></div>
+      </div>
+      <div class="team-grid-2">
+        <div class="tc tc-blue">
+          <div class="tc-title">BLUE TEAM</div>
+          <div id="blue-members"></div>
+          <div class="tc-score">팀 점수 <span id="blue-score">0</span></div>
+        </div>
+        <div class="tc tc-red">
+          <div class="tc-title">RED TEAM</div>
+          <div id="red-members"></div>
+          <div class="tc-score">팀 점수 <span id="red-score">0</span></div>
         </div>
       </div>
-      <div class="team-card-red">
-        <div class="team-card-title">RED TEAM</div>
-        <div id="red-members"></div>
-        <div class="team-score-row">
-          <span class="team-score-txt">팀 점수</span>
-          <span class="team-score-val" id="red-score" style="color:#E06060">0</span>
+      <div class="lane-analysis">
+        <div class="lane-analysis-title">LANE ANALYSIS</div>
+        <div id="lane-rows"></div>
+      </div>
+    </div>
+
+    <!-- 4팀 결과 (20명 모드) -->
+    <div id="result-4team" style="display:none">
+      <div class="team-grid-4">
+        <div class="tc tc-blue">
+          <div class="tc-title">TEAM A</div>
+          <div id="teamA-members"></div>
+          <div class="tc-score">점수 <span id="teamA-score">0</span></div>
+        </div>
+        <div class="tc tc-red">
+          <div class="tc-title">TEAM B</div>
+          <div id="teamB-members"></div>
+          <div class="tc-score">점수 <span id="teamB-score">0</span></div>
+        </div>
+        <div class="tc tc-green">
+          <div class="tc-title">TEAM C</div>
+          <div id="teamC-members"></div>
+          <div class="tc-score">점수 <span id="teamC-score">0</span></div>
+        </div>
+        <div class="tc tc-purple">
+          <div class="tc-title">TEAM D</div>
+          <div id="teamD-members"></div>
+          <div class="tc-score">점수 <span id="teamD-score">0</span></div>
         </div>
       </div>
     </div>
-    <div class="lane-analysis">
-      <div class="lane-analysis-title">LANE ANALYSIS</div>
-      <div id="lane-rows"></div>
-    </div>
+
     <button class="retry-btn" onclick="assignTeams()">다시 배정하기</button>
     <button class="copy-btn" onclick="copyResult()">카톡 복사하기</button>
   </div>
@@ -758,11 +802,21 @@ function showToast(msg, isErr){
 
 /* ── 탭 전환 ── */
 function switchTab(t){
-  ['roster','match'].forEach(function(n){
-    $id('tab-'+n).classList.toggle('active',n===t);
-    $id('pane-'+n).classList.toggle('active',n===t);
-  });
+  document.getElementById('tab-roster').classList.toggle('active', t==='roster');
+  document.getElementById('tab-match').classList.toggle('active', t==='match');
+  document.getElementById('pane-roster').classList.toggle('active', t==='roster');
+  document.getElementById('pane-match').classList.toggle('active', t==='match');
   if(t==='match') renderAttendList();
+}
+
+/* ── 내전 모드 ── */
+var matchMode = 10;
+function setMode(n){
+  matchMode = n;
+  document.getElementById('mode-10').classList.toggle('active', n===10);
+  document.getElementById('mode-20').classList.toggle('active', n===20);
+  document.getElementById('need-txt').textContent = n===10 ? '10명이면 배정 가능' : '20명이면 배정 가능';
+  updateAttendCount();
 }
 
 /* ── 티어 점수 ── */
@@ -770,78 +824,108 @@ var TIER_SCORE={챌린저:10,그랜드마스터:9,마스터:8,다이아몬드:7,
 var TIER_ICONS_M={챌린저:'C',그랜드마스터:'GM',마스터:'M',다이아몬드:'D',에메랄드:'E',플래티넘:'P',골드:'G',실버:'S',브론즈:'B',아이언:'I'};
 var LANE_ORDER=['탑','정글','미드','원딜','서폿'];
 
-/* ── 참석자 렌더 (희망/주/부 포지션 3단계) ── */
+/* ── 참석자 ── */
 var attendMap={};
 
 function renderAttendList(){
-  var list=$id('attend-list');
+  var list=document.getElementById('attend-list');
   if(!roster.length){
     list.innerHTML='<div class="empty-match">ROSTER 탭에서 멤버를 먼저 등록해 주세요</div>';
-    $id('assign-btn').disabled=true; return;
+    document.getElementById('assign-btn').disabled=true;
+    return;
   }
   roster.forEach(function(m){
-    if(!attendMap[m.id]) attendMap[m.id]={checked:false,hope:m.main||'탑',main:m.main||'탑',sub:m.sub||null};
+    if(!attendMap[m.id]) attendMap[m.id]={checked:false,hope:m.main||'탑'};
   });
   var OPTS=['탑','정글','미드','원딜','서폿'];
-  list.innerHTML=roster.map(function(m){
+  var rows='';
+  roster.forEach(function(m){
     var a=attendMap[m.id];
     var rgb=hexRgb(m.color);
     var chk=a.checked?'checked':'';
-    function makeOpts(val){
-      return OPTS.map(function(p){return '<option value="'+p+'"'+(val===p?' selected':'')+'>'+p+'</option>';}).join('');
-    }
-    var subTxt = m.sub ? ' · 주:'+esc(m.main)+' 부:'+esc(m.sub) : ' · '+esc(m.main);
-    return '<div class="attend-row '+chk+'" id="ar-'+esc(m.id)+'" data-mid="'+esc(m.id)+'">'+
-      '<div class="attend-top" onclick="onAttendClick(this)">'+
-        '<div class="attend-chk">'+(a.checked?'✓':'')+'</div>'+
-        '<div class="attend-em" style="border-color:'+m.color+';color:'+m.color+';background:rgba('+rgb+',.12)">'+TIER_ICONS_M[m.tier]+'</div>'+
-        '<div class="attend-info">'+
-          '<div class="attend-name">'+esc(m.nick)+'</div>'+
-          '<div class="attend-sub">'+esc(m.tier)+subTxt+'</div>'+
-        '</div>'+
-      '</div>'+
-      '<div class="attend-pos-row">'+
-        '<span class="pos-label"><span class="star">★</span>희망</span>'+
-        '<select class="pos-sel" data-mid="'+esc(m.id)+'" onclick="event.stopPropagation()" onchange="onHopeChange(this)">'+makeOpts(a.hope)+'</select>'+
-      '</div>'+
-    '</div>';
-  }).join('');
+    var subTxt=m.sub?' · 주:'+esc(m.main)+' 부:'+esc(m.sub):' · '+esc(m.main);
+    var opts=OPTS.map(function(p){return '<option value="'+p+'"'+(a.hope===p?' selected':'')+'>'+p+'</option>';}).join('');
+    var mid=esc(m.id);
+    rows+='<div class="attend-row '+chk+'" id="ar-'+mid+'" data-mid="'+mid+'">';
+    rows+='<div class="attend-top" onclick="onAttendClick(this)">';
+    rows+='<div class="attend-chk">'+(a.checked?'&#10003;':'')+'</div>';
+    rows+='<div class="attend-em" style="border-color:'+m.color+';color:'+m.color+';background:rgba('+rgb+',.12)">'+TIER_ICONS_M[m.tier]+'</div>';
+    rows+='<div class="attend-info"><div class="attend-name">'+esc(m.nick)+'</div><div class="attend-sub">'+esc(m.tier)+subTxt+'</div></div>';
+    rows+='</div>';
+    rows+='<div class="attend-pos-row">';
+    rows+='<span class="pos-label"><span class="star">&#9733;</span>희망</span>';
+    rows+='<select class="pos-sel" data-mid="'+mid+'" onclick="event.stopPropagation()" onchange="onHopeChange(this)">'+opts+'</select>';
+    rows+='</div></div>';
+  });
+  list.innerHTML=rows;
   updateAttendCount();
 }
 
 function onAttendClick(el){
   var row=el.closest('.attend-row');
+  if(!row) return;
   var id=row.getAttribute('data-mid');
-  toggleAttend(id);
+  if(!attendMap[id]) attendMap[id]={checked:false,hope:'탑'};
+  attendMap[id].checked=!attendMap[id].checked;
+  row.classList.toggle('checked',attendMap[id].checked);
+  var chk=row.querySelector('.attend-chk');
+  if(chk) chk.innerHTML=attendMap[id].checked?'&#10003;':'';
+  updateAttendCount();
 }
+
 function onHopeChange(sel){
   var id=sel.getAttribute('data-mid');
-  changeHope(id,sel.value);
-}
-function toggleAttend(id){
-  if(!attendMap[id]) attendMap[id]={checked:false,hope:null,main:null,sub:null};
-  attendMap[id].checked=!attendMap[id].checked;
-  var row=$id('ar-'+id);
-  if(row){
-    row.classList.toggle('checked',attendMap[id].checked);
-    row.querySelector('.attend-chk').textContent=attendMap[id].checked?'✓':'';
-  }
-  updateAttendCount();
+  if(attendMap[id]) attendMap[id].hope=sel.value;
 }
 
 function changeHope(id,pos){ if(attendMap[id]) attendMap[id].hope=pos; }
 
 function updateAttendCount(){
   var cnt=roster.filter(function(m){return attendMap[m.id]&&attendMap[m.id].checked;}).length;
-  $id('attend-cnt').textContent=cnt;
-  $id('assign-btn').disabled=(cnt<2);
+  document.getElementById('attend-cnt').textContent=cnt;
+  var need = matchMode===20 ? 20 : 10;
+  document.getElementById('assign-btn').disabled = (cnt < 2);
 }
 
-/* ── 팀 배정 알고리즘 ──
-   포지션 우선순위: 1순위=희망, 2순위=주포지션, 3순위=부포지션
-   팀 구성: 가능한 5포지션 채우기 → 점수 균형
-── */
-var lastBlue=[], lastRed=[];
+/* ── 팀 배정 ── */
+var lastTeams=[];
+
+function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+function assignPos(team){
+  var assigned={}, usedPos={};
+  /* 1패스: 희망 */
+  team.forEach(function(m){
+    var p=m.prefs[0];
+    if(p&&!usedPos[p]){usedPos[p]=true;assigned[m.id]=p;}
+  });
+  /* 2패스: 주포지션 */
+  team.forEach(function(m){
+    if(assigned[m.id]) return;
+    var p=m.prefs[1];
+    if(p&&!usedPos[p]){usedPos[p]=true;assigned[m.id]=p;}
+  });
+  /* 3패스: 부포지션 */
+  team.forEach(function(m){
+    if(assigned[m.id]) return;
+    var p=m.prefs[2];
+    if(p&&!usedPos[p]){usedPos[p]=true;assigned[m.id]=p;}
+  });
+  /* 나머지: 빈 포지션 */
+  team.forEach(function(m){
+    if(assigned[m.id]) return;
+    var avail=LANE_ORDER.filter(function(p){return !usedPos[p];});
+    assigned[m.id]=avail.length?avail[0]:m.prefs[0]||'탑';
+    if(avail.length) usedPos[avail[0]]=true;
+  });
+  return assigned;
+}
+
+function sortByLane(arr){
+  return arr.slice().sort(function(a,b){return LANE_ORDER.indexOf(a.pos)-LANE_ORDER.indexOf(b.pos);});
+}
+
+function teamScore(arr){ return arr.reduce(function(s,m){return s+m.score;},0); }
 
 function assignTeams(){
   var pool=roster.filter(function(m){return attendMap[m.id]&&attendMap[m.id].checked;});
@@ -849,153 +933,156 @@ function assignTeams(){
 
   pool=pool.map(function(m){
     var a=attendMap[m.id];
-    /* 포지션 우선순위 배열 */
     var prefs=[];
     if(a.hope) prefs.push(a.hope);
-    if(m.main && prefs.indexOf(m.main)===-1) prefs.push(m.main);
-    if(m.sub && prefs.indexOf(m.sub)===-1) prefs.push(m.sub);
-    return {id:m.id,nick:m.nick,tier:m.tier,color:m.color,
-      score:TIER_SCORE[m.tier]||1,prefs:prefs};
+    if(m.main&&prefs.indexOf(m.main)===-1) prefs.push(m.main);
+    if(m.sub&&prefs.indexOf(m.sub)===-1) prefs.push(m.sub);
+    return {id:m.id,nick:m.nick,tier:m.tier,color:m.color,score:TIER_SCORE[m.tier]||1,prefs:prefs};
   });
 
-  var n=pool.length, half=Math.floor(n/2);
-
-  function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
-
-  function getCombinations(arr,k){
-    var results=[];
-    function bt(s,cur){if(cur.length===k){results.push(cur.slice());return;}for(var i=s;i<arr.length;i++){cur.push(arr[i]);bt(i+1,cur);cur.pop();}}
-    bt(0,[]);return results;
+  if(matchMode===20 && pool.length>=4){
+    assign4Teams(pool);
+  } else {
+    assign2Teams(pool);
   }
-
-  /* 포지션 배정: 우선순위 순으로 배치, 점수 반환 */
-  function assignPos(team){
-    var assigned={}, usedPos={}, score=0;
-    /* 1패스: 희망(index 0) */
-    team.forEach(function(m){
-      var p=m.prefs[0];
-      if(p&&!usedPos[p]){usedPos[p]=true;assigned[m.id]=p;score+=m.score;}
-    });
-    /* 2패스: 주포지션(index 1) */
-    team.forEach(function(m){
-      if(assigned[m.id]) return;
-      var p=m.prefs[1];
-      if(p&&!usedPos[p]){usedPos[p]=true;assigned[m.id]=p;score+=m.score;}
-    });
-    /* 3패스: 부포지션(index 2) */
-    team.forEach(function(m){
-      if(assigned[m.id]) return;
-      var p=m.prefs[2];
-      if(p&&!usedPos[p]){usedPos[p]=true;assigned[m.id]=p;score+=m.score;}
-    });
-    /* 나머지: 빈 포지션 아무거나 */
-    team.forEach(function(m){
-      if(assigned[m.id]) return;
-      var avail=LANE_ORDER.filter(function(p){return !usedPos[p];});
-      if(avail.length){usedPos[avail[0]]=true;assigned[m.id]=avail[0];}
-      else assigned[m.id]=m.prefs[0]||'탑';
-      score+=m.score;
-    });
-    return {assigned:assigned,score:score};
-  }
-
-  var shuffled=shuffle(pool);
-  var combos=getCombinations(shuffled,half);
-  if(combos.length>300) combos=shuffle(combos).slice(0,300);
-
-  var bestDiff=Infinity, bestBlue=[], bestRed=[], bestBA={}, bestRA={};
-
-  combos.forEach(function(blue){
-    var bids=blue.map(function(m){return m.id;});
-    var red=shuffled.filter(function(m){return bids.indexOf(m.id)===-1;});
-    var ba=assignPos(blue), ra=assignPos(red);
-    var diff=Math.abs(ba.score-ra.score);
-    if(diff<bestDiff){bestDiff=diff;bestBlue=blue;bestRed=red;bestBA=ba.assigned;bestRA=ra.assigned;}
-  });
-
-  /* 포지션 붙이기 */
-  bestBlue=bestBlue.map(function(m){return Object.assign({},m,{pos:bestBA[m.id]||m.prefs[0]||'탑'});});
-  bestRed=bestRed.map(function(m){return Object.assign({},m,{pos:bestRA[m.id]||m.prefs[0]||'탑'});});
-
-  /* LANE_ORDER 순으로 정렬 */
-  function sortByLane(arr){
-    return arr.slice().sort(function(a,b){return LANE_ORDER.indexOf(a.pos)-LANE_ORDER.indexOf(b.pos);});
-  }
-  lastBlue=sortByLane(bestBlue);
-  lastRed=sortByLane(bestRed);
-  renderResult(lastBlue,lastRed);
 }
 
-function renderResult(blue,red){
-  var bs=blue.reduce(function(s,m){return s+m.score;},0);
-  var rs=red.reduce(function(s,m){return s+m.score;},0);
-  var total=bs+rs||1;
-  var bp=Math.round(bs/total*100);
-  $id('bal-blue').style.width=bp+'%';
-  $id('bal-red').style.width=(100-bp)+'%';
-  $id('bal-blue-txt').textContent='블루 '+bs+'점';
-  $id('bal-red-txt').textContent='레드 '+rs+'점';
-  $id('blue-score').textContent=bs;
-  $id('red-score').textContent=rs;
-
-  function memberRows(arr,posClass){
-    return arr.map(function(m){
-      return '<div class="team-member-row">'+
-        '<span class="tm-pos '+posClass+'">'+esc(m.pos)+'</span>'+
-        '<span class="tm-name">'+esc(m.nick)+'</span>'+
-        '<span class="tm-tier">'+esc(m.tier)+'</span>'+
-      '</div>';
-    }).join('');
+function assign2Teams(pool){
+  var n=pool.length, half=Math.floor(n/2);
+  var shuffled=shuffle(pool);
+  /* 조합 탐색 */
+  var best=Infinity, bBlue=[], bRed=[], bBA={}, bRA={};
+  function combine(start, cur){
+    if(cur.length===half){
+      var bids=cur.map(function(m){return m.id;});
+      var red=shuffled.filter(function(m){return bids.indexOf(m.id)===-1;});
+      var ba=assignPos(cur), ra=assignPos(red);
+      var bs=cur.reduce(function(s,m){return s+m.score;},0);
+      var rs=red.reduce(function(s,m){return s+m.score;},0);
+      var diff=Math.abs(bs-rs);
+      if(diff<best){best=diff;bBlue=cur.slice();bRed=red;bBA=ba;bRA=ra;}
+      return;
+    }
+    for(var i=start;i<shuffled.length-(half-cur.length-1);i++){
+      cur.push(shuffled[i]);
+      combine(i+1,cur);
+      cur.pop();
+      if(best===0) return;
+    }
   }
-  $id('blue-members').innerHTML=memberRows(blue,'tm-pos-blue');
-  $id('red-members').innerHTML=memberRows(red,'tm-pos-red');
+  /* 10명 이하면 완전탐색, 그 이상은 랜덤 샘플 */
+  if(pool.length<=10){
+    combine(0,[]);
+  } else {
+    for(var t=0;t<400;t++){
+      var s=shuffle(pool), bl=s.slice(0,half), re=s.slice(half);
+      var ba=assignPos(bl), ra=assignPos(re);
+      var bs=bl.reduce(function(a,m){return a+m.score;},0);
+      var rs=re.reduce(function(a,m){return a+m.score;},0);
+      var diff=Math.abs(bs-rs);
+      if(diff<best){best=diff;bBlue=bl;bRed=re;bBA=ba;bRA=ra;}
+    }
+  }
+  bBlue=sortByLane(bBlue.map(function(m){return Object.assign({},m,{pos:bBA[m.id]||m.prefs[0]||'탑'});}));
+  bRed=sortByLane(bRed.map(function(m){return Object.assign({},m,{pos:bRA[m.id]||m.prefs[0]||'탑'});}));
+  lastTeams=[bBlue,bRed];
+  render2Teams(bBlue,bRed);
+}
 
-  /* 라인별 우열 분석 */
-  var laneRows='';
-  LANE_ORDER.forEach(function(lane){
-    var bm=blue.find(function(m){return m.pos===lane;});
-    var rm=red.find(function(m){return m.pos===lane;});
-    if(!bm&&!rm) return;
-    var bs2=bm?bm.score:0, rs2=rm?rm.score:0;
-    var tot=bs2+rs2||1;
-    var bpct=Math.round(bs2/tot*100);
-    var diff=bs2-rs2;
-    var resultCls='draw', resultTxt='균형';
-    if(diff>0){resultCls='blue-win';resultTxt='블루 우세';}
-    else if(diff<0){resultCls='red-win';resultTxt='레드 우세';}
-    laneRows+='<div class="lane-row">'+
-      '<span class="lane-nm">'+lane+'</span>'+
-      '<div class="lane-bar-wrap">'+
-        '<div class="lane-bar-b" style="width:'+bpct+'%"></div>'+
-        '<div class="lane-bar-r" style="width:'+(100-bpct)+'%"></div>'+
-      '</div>'+
-      '<span class="lane-result '+resultCls+'">'+resultTxt+'</span>'+
-    '</div>';
+function assign4Teams(pool){
+  var best=Infinity, bestSplit=[];
+  for(var t=0;t<400;t++){
+    var s=shuffle(pool), q=Math.floor(s.length/4);
+    var teams=[s.slice(0,q),s.slice(q,q*2),s.slice(q*2,q*3),s.slice(q*3)];
+    var scores=teams.map(function(tm){return tm.reduce(function(a,m){return a+m.score;},0);});
+    var mx=Math.max.apply(null,scores), mn=Math.min.apply(null,scores), diff=mx-mn;
+    if(diff<best){best=diff;bestSplit=teams.map(function(a){return a.slice();});}
+  }
+  var result=bestSplit.map(function(tm){
+    var pos=assignPos(tm);
+    return sortByLane(tm.map(function(m){return Object.assign({},m,{pos:pos[m.id]||m.prefs[0]||'탑'});}));
   });
-  $id('lane-rows').innerHTML=laneRows;
-  $id('result-section').style.display='block';
+  lastTeams=result;
+  render4Teams(result);
+}
+
+function tmRow(m, posClass){
+  return '<div class="tm-row"><span class="tm-pos '+posClass+'">'+esc(m.pos)+'</span><span class="tm-name">'+esc(m.nick)+'</span><span class="tm-tier">'+esc(m.tier)+'</span></div>';
+}
+
+function render2Teams(blue,red){
+  document.getElementById('result-2team').style.display='block';
+  document.getElementById('result-4team').style.display='none';
+  var bs=teamScore(blue), rs=teamScore(red), tot=bs+rs||1;
+  var bp=Math.round(bs/tot*100);
+  document.getElementById('bal-blue').style.width=bp+'%';
+  document.getElementById('bal-red').style.width=(100-bp)+'%';
+  document.getElementById('bal-blue-txt').textContent='블루 '+bs+'점';
+  document.getElementById('bal-red-txt').textContent='레드 '+rs+'점';
+  document.getElementById('blue-score').textContent=bs;
+  document.getElementById('red-score').textContent=rs;
+  document.getElementById('blue-members').innerHTML=blue.map(function(m){return tmRow(m,'tm-pos-b');}).join('');
+  document.getElementById('red-members').innerHTML=red.map(function(m){return tmRow(m,'tm-pos-r');}).join('');
+  /* 라인 분석 */
+  var laneHtml='';
+  LANE_ORDER.forEach(function(lane){
+    var bm=blue.find(function(m){return m.pos===lane;}), rm=red.find(function(m){return m.pos===lane;});
+    if(!bm&&!rm) return;
+    var bs2=bm?bm.score:0, rs2=rm?rm.score:0, tot2=bs2+rs2||1;
+    var diff=bs2-rs2, cls=diff>0?'blue-win':diff<0?'red-win':'draw', txt=diff>0?'블루 우세':diff<0?'레드 우세':'균형';
+    laneHtml+='<div class="lane-row"><span class="lane-nm">'+lane+'</span><div class="lane-bar-wrap"><div class="lane-bar-b" style="width:'+Math.round(bs2/tot2*100)+'%"></div><div class="lane-bar-r" style="width:'+Math.round(rs2/tot2*100)+'%"></div></div><span class="lane-result '+cls+'">'+txt+'</span></div>';
+  });
+  document.getElementById('lane-rows').innerHTML=laneHtml;
+  document.getElementById('result-section').style.display='block';
+}
+
+function render4Teams(teams){
+  document.getElementById('result-2team').style.display='none';
+  document.getElementById('result-4team').style.display='block';
+  var labels=['A','B','C','D'], posClasses=['tm-pos-b','tm-pos-r','tm-pos-g','tm-pos-p'];
+  teams.forEach(function(tm,i){
+    var id='team'+labels[i];
+    document.getElementById(id+'-members').innerHTML=tm.map(function(m){return tmRow(m,posClasses[i]);}).join('');
+    document.getElementById(id+'-score').textContent=teamScore(tm);
+  });
+  document.getElementById('result-section').style.display='block';
 }
 
 function copyResult(){
-  if(!lastBlue.length) return;
-  var nl = '\n';
-  var bs=lastBlue.reduce(function(s,m){return s+m.score;},0);
-  var rs=lastRed.reduce(function(s,m){return s+m.score;},0);
-  var txt = '[HGE] 내전 팀 배정' + nl;
-  txt += nl + '[블루팀] ' + bs + '점' + nl;
-  lastBlue.forEach(function(m){txt += '  ' + m.pos + ' ' + m.nick + ' (' + m.tier + ')' + nl;});
-  txt += nl + '[레드팀] ' + rs + '점' + nl;
-  lastRed.forEach(function(m){txt += '  ' + m.pos + ' ' + m.nick + ' (' + m.tier + ')' + nl;});
-  txt += nl + '[라인 분석]' + nl;
-  LANE_ORDER.forEach(function(lane){
-    var bm=lastBlue.find(function(m){return m.pos===lane;});
-    var rm=lastRed.find(function(m){return m.pos===lane;});
-    if(!bm&&!rm) return;
-    var diff=(bm?bm.score:0)-(rm?rm.score:0);
-    var result=diff>0?'블루 우세':diff<0?'레드 우세':'균형';
-    txt += '  ' + lane + ': ' + result + nl;
-  });
-  txt += nl + 'HGE 내전 화이팅!';
+  if(!lastTeams.length) return;
+  var nl=String.fromCharCode(10);
+  var txt='[HGE] '+matchMode+'명 내전 팀 배정'+nl+nl;
+  if(matchMode===10||lastTeams.length===2){
+    var blue=lastTeams[0], red=lastTeams[1]||[];
+    txt+='[블루팀] '+teamScore(blue)+'점'+nl;
+    blue.forEach(function(m){txt+='  '+m.pos+' '+m.nick+' ('+m.tier+')'+nl;});
+    txt+=nl+'[레드팀] '+teamScore(red)+'점'+nl;
+    red.forEach(function(m){txt+='  '+m.pos+' '+m.nick+' ('+m.tier+')'+nl;});
+    txt+=nl+'[라인 분석]'+nl;
+    LANE_ORDER.forEach(function(lane){
+      var bm=blue.find(function(m){return m.pos===lane;}), rm=red.find(function(m){return m.pos===lane;});
+      if(!bm&&!rm) return;
+      var diff=(bm?bm.score:0)-(rm?rm.score:0);
+      txt+='  '+lane+': '+(diff>0?'블루 우세':diff<0?'레드 우세':'균형')+nl;
+    });
+  } else {
+    var labels=['A팀','B팀','C팀','D팀'];
+    lastTeams.forEach(function(tm,i){
+      txt+='['+labels[i]+'] '+teamScore(tm)+'점'+nl;
+      tm.forEach(function(m){txt+='  '+m.pos+' '+m.nick+' ('+m.tier+')'+nl;});
+      txt+=nl;
+    });
+  }
+  txt+='HGE 내전 화이팅!';
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(txt).then(function(){showToast('카톡에 붙여넣기 할 수 있어요!');});
+  } else {
+    var el=document.createElement('textarea');
+    el.value=txt; document.body.appendChild(el); el.select();
+    try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(el);
+    showToast('복사 완료!');
+  }
 }
 
 /* ── 관리자 모드 ── */
@@ -1050,7 +1137,9 @@ window.selSubPos = selSubPos;
 window.confirmAdd = confirmAdd;
 window.removeMember = removeMember;
 window.switchTab = switchTab;
-window.toggleAttend = toggleAttend;
+window.setMode = setMode;
+window.onAttendClick = onAttendClick;
+window.onHopeChange = onHopeChange;
 window.changeHope = changeHope;
 window.assignTeams = assignTeams;
 window.copyResult = copyResult;
