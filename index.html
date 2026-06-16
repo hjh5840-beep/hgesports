@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>HGE ROSTER</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c-bg:#02080F;--c-panel:#060F1A;--c-surface:#0A1628;--c-raised:#0F1E30;
+  --c-border:#1C2D42;--c-border-bright:#2A4060;
+  --gold:#C8922A;--gold-2:#E8B84B;--gold-3:#F5D78E;--gold-dim:#7A5520;--gold-bg:rgba(200,146,42,0.07);
+  --silver:#8C9BAA;--silver-2:#B0BEC8;--red:#C0392B;--accent:#0BC4E3;
+  --font-ko:'Noto Sans KR',sans-serif;--font-en:'Rajdhani',sans-serif;
+  --radius:3px;--radius-lg:5px;
+}
+html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);color:var(--silver-2);-webkit-font-smoothing:antialiased}
+.bg-grid{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(200,146,42,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,146,42,0.025) 1px,transparent 1px);
+  background-size:48px 48px}
+.bg-glow{position:fixed;top:-120px;left:50%;transform:translateX(-50%);width:600px;height:300px;
+  background:radial-gradient(ellipse,rgba(200,146,42,0.06) 0%,transparent 70%);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px 16px 60px}
+.app{width:100%;max-width:420px;background:var(--c-panel);border:1px solid var(--c-border);border-radius:var(--radius-lg);overflow:hidden}
+
+/* 헤더 */
+.hdr{background:var(--c-surface);padding:22px 20px 18px;text-align:center;position:relative;border-bottom:1px solid var(--c-border)}
+.hdr::before,.hdr::after{content:'';position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--gold),transparent)}
+.hdr::before{left:0}.hdr::after{right:0}
+.hdr-orn{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.orn-line{flex:1;height:1px;background:linear-gradient(to right,transparent,var(--gold-dim))}
+.orn-line.r{background:linear-gradient(to left,transparent,var(--gold-dim))}
+.orn-shape{display:flex;gap:4px;align-items:center}
+.orn-d{width:5px;height:5px;background:var(--gold);transform:rotate(45deg)}
+.orn-d.sm{width:3px;height:3px;background:var(--gold-dim)}
+.hdr-title{font-family:var(--font-en);font-size:26px;font-weight:700;color:var(--gold-2);letter-spacing:5px;line-height:1;text-shadow:0 0 30px rgba(200,146,42,0.35)}
+.hdr-sub{font-size:11px;font-weight:300;color:var(--silver);margin-top:6px;letter-spacing:2px}
+.hdr-season{display:inline-block;margin-top:8px;font-family:var(--font-en);font-size:10px;letter-spacing:2px;color:var(--gold-dim);border:1px solid var(--gold-dim);padding:2px 10px;border-radius:1px}
+
+/* 스텝바 */
+.stepbar{display:flex;align-items:center;padding:11px 20px;background:var(--c-bg);border-bottom:1px solid var(--c-border)}
+.step-item{display:flex;align-items:center;gap:6px;flex:1}
+.s-num{width:21px;height:21px;border-radius:50%;border:1px solid var(--c-border-bright);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--c-border-bright);flex-shrink:0;font-family:var(--font-en);transition:all .25s}
+.s-num.active{border-color:var(--gold);color:var(--gold);background:rgba(200,146,42,0.1)}
+.s-num.done{border-color:var(--gold-dim);background:var(--gold-dim);color:var(--c-bg)}
+.s-lbl{font-size:10px;font-weight:500;color:var(--c-border-bright);letter-spacing:.3px;transition:color .25s}
+.s-lbl.active{color:var(--gold)}
+.s-conn{flex:1;height:1px;background:var(--c-border);max-width:24px}
+
+/* 섹션 */
+.sec{padding:20px}
+.lbl{font-family:var(--font-en);font-size:10px;font-weight:700;color:var(--gold-dim);letter-spacing:2px;margin-bottom:9px;display:flex;align-items:center;gap:8px}
+.lbl::after{content:'';flex:1;height:1px;background:var(--c-border)}
+.hint{font-size:11px;font-weight:300;color:var(--silver);line-height:1.7;margin-bottom:12px}
+
+/* 입력 */
+.id-row{display:flex;gap:8px;align-items:center}
+.inp{background:var(--c-raised);border:1px solid var(--c-border);border-radius:var(--radius);padding:11px 14px;font-size:14px;font-weight:400;font-family:var(--font-ko);color:var(--silver-2);outline:none;width:100%;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none}
+.inp:focus{border-color:var(--gold-dim);box-shadow:0 0 0 2px rgba(200,146,42,0.12)}
+.inp::placeholder{color:#1E3048;font-size:13px}
+.tag-inp{width:78px;flex:none;text-align:center}
+.hash{color:var(--gold-dim);font-size:20px;font-weight:700;font-family:var(--font-en);flex-shrink:0;user-select:none}
+
+/* opgg 버튼 */
+.opgg-btn{display:flex;align-items:center;gap:10px;width:100%;margin-top:10px;padding:11px 14px;background:var(--c-raised);border:1px solid var(--c-border);border-radius:var(--radius);color:var(--silver);font-size:12px;font-family:var(--font-ko);font-weight:400;text-decoration:none;transition:all .2s;cursor:default}
+.opgg-btn.on{cursor:pointer;border-color:rgba(255,100,40,.35);color:var(--silver-2)}
+.opgg-btn.on:hover{border-color:rgba(255,100,40,.7);background:rgba(255,100,40,.07)}
+.opgg-dot{width:8px;height:8px;border-radius:50%;background:#FF6428;flex-shrink:0;opacity:.3;transition:opacity .2s}
+.opgg-btn.on .opgg-dot{opacity:1}
+.opgg-txt{flex:1}
+.opgg-arr{font-size:12px;opacity:.4}
+.opgg-btn.on .opgg-arr{opacity:1}
+
+/* 버튼 */
+.btn{width:100%;margin-top:12px;padding:13px;font-size:13px;font-weight:700;font-family:var(--font-ko);letter-spacing:1px;border-radius:var(--radius);cursor:pointer;transition:all .2s;-webkit-appearance:none}
+.btn-ghost{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.btn-ghost:hover:not(:disabled){background:rgba(200,146,42,0.12)}
+.btn-ghost:disabled{border-color:var(--c-border);color:var(--c-border-bright);cursor:default}
+.btn-solid{background:var(--gold-dim);border:none;color:var(--gold-3)}
+.btn-solid:hover:not(:disabled){background:var(--gold);color:var(--c-bg)}
+.btn-solid:disabled{background:var(--c-border);color:var(--c-border-bright);cursor:default}
+.btn:active:not(:disabled){transform:scale(.98)}
+.btn-back{display:block;width:100%;margin-top:8px;background:none;border:none;font-size:11px;font-weight:400;font-family:var(--font-ko);color:var(--silver);cursor:pointer;text-align:center;padding:6px;letter-spacing:.5px;transition:color .2s}
+.btn-back:hover{color:var(--silver-2)}
+
+/* 티어 */
+.tier-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.tier-btn{padding:10px 12px;background:var(--c-raised);border:1px solid var(--c-border);border-radius:var(--radius);cursor:pointer;display:flex;align-items:center;gap:9px;transition:all .15s;font-family:var(--font-ko)}
+.tier-btn:hover{border-color:var(--c-border-bright)}
+.tier-btn.sel{border-color:var(--gold);background:var(--gold-bg)}
+.tdot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.tnm{font-size:12px;font-weight:500;color:var(--silver);transition:color .15s;text-align:left}
+.tier-btn.sel .tnm{color:var(--silver-2)}
+
+/* 포지션 */
+.pos-subtitle{font-size:11px;font-weight:500;color:var(--silver);margin-bottom:7px;display:flex;align-items:center;gap:6px}
+.badge{font-size:9px;font-family:var(--font-en);font-weight:700;letter-spacing:1px;padding:2px 6px;border-radius:2px}
+.badge-main{background:rgba(200,146,42,.15);color:var(--gold);border:1px solid rgba(200,146,42,.3)}
+.badge-sub{background:rgba(11,196,227,.1);color:var(--accent);border:1px solid rgba(11,196,227,.25)}
+.pos-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.pos-btn{padding:10px 4px 8px;background:var(--c-raised);border:1px solid var(--c-border);border-radius:var(--radius);cursor:pointer;text-align:center;transition:all .15s;font-family:var(--font-ko);position:relative}
+.pos-btn:hover{border-color:var(--c-border-bright)}
+.pos-btn.main-sel{border-color:var(--gold);background:rgba(200,146,42,.1)}
+.pos-btn.sub-sel{border-color:var(--accent);background:rgba(11,196,227,.08)}
+.p-icon{font-size:17px;display:block;margin-bottom:3px;line-height:1}
+.p-nm{font-size:10px;font-weight:500;color:var(--silver);letter-spacing:.2px}
+.pos-btn.main-sel .p-nm{color:var(--gold)}
+.pos-btn.sub-sel .p-nm{color:var(--accent)}
+.pos-dot{position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;display:none}
+.pos-btn.main-sel .pos-dot{display:block;background:var(--gold)}
+.pos-btn.sub-sel .pos-dot{display:block;background:var(--accent)}
+.pos-section{margin-top:16px}
+.pos-mode-hint{font-size:10px;color:var(--silver);margin-top:7px;text-align:center;font-weight:300}
+
+/* 미리보기 */
+.preview{background:var(--c-raised);border:1px solid var(--gold-dim);border-radius:var(--radius-lg);padding:14px 16px;margin-top:16px;position:relative;display:none}
+.preview::before{content:'';position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+.pv-row{display:flex;align-items:center;gap:12px}
+.pv-em{width:46px;height:46px;border-radius:50%;border:2px solid;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;font-family:var(--font-en);flex-shrink:0}
+.pv-info{flex:1;min-width:0}
+.pv-id{font-size:14px;font-weight:700;color:var(--silver-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pv-tier{font-size:12px;font-weight:500;margin-top:2px}
+.pv-pos{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+.pv-pos-tag{padding:2px 8px;border-radius:2px;font-size:10px;font-weight:500}
+.pv-main{background:rgba(200,146,42,.12);color:var(--gold);border:1px solid rgba(200,146,42,.3)}
+.pv-sub{background:rgba(11,196,227,.08);color:var(--accent);border:1px solid rgba(11,196,227,.2)}
+
+/* 구분선 */
+.divider{height:1px;background:linear-gradient(to right,transparent,var(--gold-dim),transparent)}
+
+/* 명단 */
+.roster-bar{display:flex;align-items:center;justify-content:space-between;padding:13px 20px 9px}
+.roster-title{font-family:var(--font-en);font-size:11px;font-weight:700;color:var(--gold);letter-spacing:2px}
+.r-badge{font-size:10px;font-weight:500;padding:3px 9px;border:1px solid var(--c-border);border-radius:2px;color:var(--silver);font-family:var(--font-en);letter-spacing:.5px}
+
+/* 멤버 행 */
+.mrow{display:flex;align-items:center;gap:10px;padding:10px 20px;border-bottom:1px solid rgba(28,45,66,.7);transition:background .15s}
+.mrow:last-child{border-bottom:none}
+.mrow:hover{background:rgba(15,30,48,.5)}
+.m-num{font-size:10px;font-weight:700;color:var(--gold-dim);width:16px;text-align:right;flex-shrink:0;font-family:var(--font-en)}
+.m-em{width:34px;height:34px;border-radius:50%;border:1.5px solid;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:var(--font-en)}
+.m-info{flex:1;min-width:0}
+.m-name{font-size:12px;font-weight:700;color:var(--silver-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-meta{display:flex;gap:5px;margin-top:3px;flex-wrap:wrap}
+.m-tag{font-size:9px;font-weight:500;padding:2px 6px;border-radius:2px;border:1px solid}
+.m-tag.tier-tag{border-color:inherit}
+.m-tag.main-tag{background:rgba(200,146,42,.1);color:var(--gold);border-color:rgba(200,146,42,.3)}
+.m-tag.sub-tag{background:rgba(11,196,227,.07);color:var(--accent);border-color:rgba(11,196,227,.2)}
+.m-actions{display:flex;align-items:center;gap:2px;flex-shrink:0}
+.m-opgg{display:flex;align-items:center;color:var(--c-border-bright);text-decoration:none;padding:5px;border-radius:var(--radius);font-size:12px;transition:color .15s}
+.m-opgg:hover{color:#FF6428}
+.m-del{background:none;border:none;cursor:pointer;color:var(--c-border-bright);padding:5px;border-radius:var(--radius);font-size:13px;line-height:1;transition:color .15s;display:flex;align-items:center}
+.m-del:hover{color:var(--red)}
+
+/* 로딩 */
+.loading-bar{display:none;text-align:center;padding:24px 20px;color:var(--silver);font-size:12px;font-weight:300;letter-spacing:.5px}
+.loading-dots{display:flex;justify-content:center;gap:5px;margin-bottom:10px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--gold-dim);animation:pulse 1.2s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,100%{opacity:.3;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+
+.empty{text-align:center;padding:32px 20px;color:var(--c-border-bright);font-size:12px;font-weight:300;line-height:1.9}
+.empty-ico{font-size:26px;opacity:.2;display:block;margin-bottom:8px}
+
+/* 토스트 */
+.toast{background:var(--c-surface);border:1px solid var(--gold-dim);color:var(--gold-3);font-size:12px;font-weight:500;padding:10px 16px;margin:0 20px 10px;border-radius:var(--radius);display:none;text-align:center;letter-spacing:.3px}
+.toast.on{display:block}
+.toast.err{border-color:var(--red);color:#EF9A9A}
+
+/* 동기화 상태 */
+.sync-bar{display:flex;align-items:center;justify-content:flex-end;gap:5px;padding:5px 20px;border-bottom:1px solid var(--c-border)}
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--c-border-bright);flex-shrink:0;transition:background .3s}
+.sync-dot.ok{background:#3DB88A}
+.sync-dot.loading{background:var(--gold);animation:pulse 1s infinite}
+.sync-dot.err{background:var(--red)}
+.sync-txt{font-size:9px;color:var(--silver);letter-spacing:.5px;font-family:var(--font-en)}
+
+.page{display:none}.page.active{display:block}
+
+.footer{padding:12px 20px;border-top:1px solid var(--c-border);text-align:center}
+.footer-txt{font-size:10px;font-weight:300;color:var(--c-border-bright);letter-spacing:.8px}
+
+@media(max-width:440px){
+  .wrap{padding:0}
+  .app{max-width:100%;border:none;border-radius:0;min-height:100vh}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="wrap">
+<div class="app">
+
+<!-- 헤더 -->
+<div class="hdr">
+  <div class="hdr-orn">
+    <div class="orn-line"></div>
+    <div class="orn-shape"><div class="orn-d sm"></div><div class="orn-d"></div><div class="orn-d sm"></div></div>
+    <div class="orn-line r"></div>
+  </div>
+  <div class="hdr-title">HGE ROSTER</div>
+  <div class="hdr-sub">한화손보 리그 오브 레전드 동아리</div>
+  <div class="hdr-season">2025 SEASON</div>
+</div>
+
+<!-- 동기화 상태 -->
+<div class="sync-bar">
+  <div class="sync-dot loading" id="sync-dot"></div>
+  <span class="sync-txt" id="sync-txt">CONNECTING...</span>
+</div>
+
+<!-- 스텝바 -->
+<div class="stepbar">
+  <div class="step-item"><div class="s-num active" id="sn1">1</div><span class="s-lbl active" id="sl1">아이디</span></div>
+  <div class="s-conn"></div>
+  <div class="step-item"><div class="s-num" id="sn2">2</div><span class="s-lbl" id="sl2">티어</span></div>
+  <div class="s-conn"></div>
+  <div class="step-item"><div class="s-num" id="sn3">3</div><span class="s-lbl" id="sl3">포지션</span></div>
+  <div class="s-conn"></div>
+  <div class="step-item"><div class="s-num" id="sn4">4</div><span class="s-lbl" id="sl4">완료</span></div>
+</div>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+<div class="sec">
+  <div class="lbl">소환사 아이디</div>
+  <div class="id-row">
+    <input class="inp" id="nick" placeholder="소환사 이름" maxlength="20" autocomplete="off"/>
+    <span class="hash">#</span>
+    <input class="inp tag-inp" id="tag" placeholder="KR1" maxlength="5" autocomplete="off"/>
+  </div>
+  <a class="opgg-btn" id="opgg-link" href="#" target="_blank" rel="noopener">
+    <span class="opgg-dot"></span>
+    <span class="opgg-txt">OP.GG에서 내 전적 · 티어 확인하기</span>
+    <span class="opgg-arr">↗</span>
+  </a>
+  <p class="hint" style="margin-top:9px;">아이디 입력 후 OP.GG에서 솔로랭크 티어를 확인하세요.<br>확인 후 아래 버튼으로 다음 단계로 이동하세요.</p>
+  <button class="btn btn-ghost" id="step1-next" disabled onclick="goStep(2)">다음 단계 →</button>
+</div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+<div class="sec">
+  <div class="lbl">솔로랭크 티어</div>
+  <p class="hint">OP.GG에서 확인한 현재 티어를 선택하세요.</p>
+  <div class="tier-grid">
+    <button class="tier-btn" data-tier="챌린저"      data-score="10" data-color="#EBA832" onclick="selTier(this)"><span class="tdot" style="background:#EBA832"></span><span class="tnm">챌린저</span></button>
+    <button class="tier-btn" data-tier="그랜드마스터" data-score="9"  data-color="#D85A30" onclick="selTier(this)"><span class="tdot" style="background:#D85A30"></span><span class="tnm">그랜드마스터</span></button>
+    <button class="tier-btn" data-tier="마스터"       data-score="8"  data-color="#C4507A" onclick="selTier(this)"><span class="tdot" style="background:#C4507A"></span><span class="tnm">마스터</span></button>
+    <button class="tier-btn" data-tier="다이아몬드"   data-score="7"  data-color="#6AACE8" onclick="selTier(this)"><span class="tdot" style="background:#6AACE8"></span><span class="tnm">다이아몬드</span></button>
+    <button class="tier-btn" data-tier="에메랄드"     data-score="6"  data-color="#3DB88A" onclick="selTier(this)"><span class="tdot" style="background:#3DB88A"></span><span class="tnm">에메랄드</span></button>
+    <button class="tier-btn" data-tier="플래티넘"     data-score="5"  data-color="#20A878" onclick="selTier(this)"><span class="tdot" style="background:#20A878"></span><span class="tnm">플래티넘</span></button>
+    <button class="tier-btn" data-tier="골드"         data-score="4"  data-color="#C89B3C" onclick="selTier(this)"><span class="tdot" style="background:#C89B3C"></span><span class="tnm">골드</span></button>
+    <button class="tier-btn" data-tier="실버"         data-score="3"  data-color="#9EAAB6" onclick="selTier(this)"><span class="tdot" style="background:#9EAAB6"></span><span class="tnm">실버</span></button>
+    <button class="tier-btn" data-tier="브론즈"       data-score="2"  data-color="#9A5C38" onclick="selTier(this)"><span class="tdot" style="background:#9A5C38"></span><span class="tnm">브론즈</span></button>
+    <button class="tier-btn" data-tier="아이언"       data-score="1"  data-color="#6B7A8A" onclick="selTier(this)"><span class="tdot" style="background:#6B7A8A"></span><span class="tnm">아이언</span></button>
+  </div>
+  <button class="btn btn-ghost" id="step2-next" disabled onclick="goStep(3)" style="margin-top:14px">다음 단계 →</button>
+  <button class="btn-back" onclick="goStep(1)">← 이전으로</button>
+</div>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+<div class="sec">
+  <div class="lbl">포지션</div>
+  <div class="pos-subtitle"><span class="badge badge-main">MAIN</span>주 포지션을 선택하세요</div>
+  <div class="pos-grid" id="main-pos-grid">
+    <button class="pos-btn" data-pos="탑"   onclick="selMainPos(this)"><span class="pos-dot"></span><span class="p-icon">🛡️</span><div class="p-nm">탑</div></button>
+    <button class="pos-btn" data-pos="정글" onclick="selMainPos(this)"><span class="pos-dot"></span><span class="p-icon">🌿</span><div class="p-nm">정글</div></button>
+    <button class="pos-btn" data-pos="미드" onclick="selMainPos(this)"><span class="pos-dot"></span><span class="p-icon">⚡</span><div class="p-nm">미드</div></button>
+    <button class="pos-btn" data-pos="원딜" onclick="selMainPos(this)"><span class="pos-dot"></span><span class="p-icon">🏹</span><div class="p-nm">원딜</div></button>
+    <button class="pos-btn" data-pos="서폿" onclick="selMainPos(this)"><span class="pos-dot"></span><span class="p-icon">💚</span><div class="p-nm">서폿</div></button>
+  </div>
+  <div class="pos-section">
+    <div class="pos-subtitle"><span class="badge badge-sub">SUB</span>부 포지션을 선택하세요 (선택)</div>
+    <div class="pos-grid" id="sub-pos-grid">
+      <button class="pos-btn" data-pos="탑"   onclick="selSubPos(this)"><span class="pos-dot"></span><span class="p-icon">🛡️</span><div class="p-nm">탑</div></button>
+      <button class="pos-btn" data-pos="정글" onclick="selSubPos(this)"><span class="pos-dot"></span><span class="p-icon">🌿</span><div class="p-nm">정글</div></button>
+      <button class="pos-btn" data-pos="미드" onclick="selSubPos(this)"><span class="pos-dot"></span><span class="p-icon">⚡</span><div class="p-nm">미드</div></button>
+      <button class="pos-btn" data-pos="원딜" onclick="selSubPos(this)"><span class="pos-dot"></span><span class="p-icon">🏹</span><div class="p-nm">원딜</div></button>
+      <button class="pos-btn" data-pos="서폿" onclick="selSubPos(this)"><span class="pos-dot"></span><span class="p-icon">💚</span><div class="p-nm">서폿</div></button>
+    </div>
+    <p class="pos-mode-hint" id="pos-hint">주 포지션과 다른 포지션을 선택하세요</p>
+  </div>
+
+  <div class="lbl" style="margin-top:18px">등록 확인</div>
+  <div class="preview" id="preview">
+    <div class="pv-row">
+      <div class="pv-em" id="pv-em"></div>
+      <div class="pv-info">
+        <div class="pv-id" id="pv-id"></div>
+        <div class="pv-tier" id="pv-tier"></div>
+        <div class="pv-pos" id="pv-pos"></div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn btn-solid" id="step3-confirm" disabled onclick="confirmAdd()">명단에 등록하기</button>
+  <button class="btn-back" onclick="goStep(2)">← 이전으로</button>
+</div>
+</div>
+
+<!-- 구분선 -->
+<div class="divider"></div>
+
+<!-- 명단 -->
+<div class="roster-bar">
+  <span class="roster-title">MEMBER LIST</span>
+  <span class="r-badge" id="r-badge">0명</span>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div class="loading-bar" id="loading-bar">
+  <div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+  명단 불러오는 중...
+</div>
+
+<div id="roster-list"></div>
+
+<div class="footer">
+  <div class="footer-txt">HGE · HANWHA LIFE INSURANCE LOL CLUB</div>
+</div>
+
+</div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ── JSONBin 설정 ── */
+var BIN_ID  = '6a30f1bef5f4af5e29f981a8';
+var API_KEY = '$2a$10$UM5GTb0PzchDqj64cVKVBOVWg8r1EOvbvF749zM54MimO5xvSlhNG';
+var BIN_URL = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
+
+/* ── 상수 ── */
+var ICONS = {챌린저:'C',그랜드마스터:'GM',마스터:'M',다이아몬드:'D',에메랄드:'E',플래티넘:'P',골드:'G',실버:'S',브론즈:'B',아이언:'I'};
+var POLL_MS = 8000; // 8초마다 자동 갱신
+
+/* ── 상태 ── */
+var roster = [];
+var curStep = 1;
+var curTier = null, curScore = 0, curColor = '#8C9BAA', curMain = null, curSub = null;
+var pollTimer = null;
+
+/* ── 유틸 ── */
+function $id(id){ return document.getElementById(id); }
+function getNick(){ return $id('nick').value.trim(); }
+function getTag(){  return $id('tag').value.trim(); }
+function getFullId(){ return getNick() + '#' + getTag(); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function hexRgb(h){ var c=h.replace('#',''); return [parseInt(c.slice(0,2),16),parseInt(c.slice(2,4),16),parseInt(c.slice(4,6),16)].join(','); }
+
+/* ── 동기화 상태 표시 ── */
+function setSyncState(state, text){
+  var dot = $id('sync-dot'), txt = $id('sync-txt');
+  dot.className = 'sync-dot ' + state;
+  txt.textContent = text;
+}
+
+/* ── JSONBin 읽기 ── */
+function fetchRoster(silent){
+  if(!silent) setSyncState('loading', 'SYNCING...');
+  return fetch(BIN_URL + '/latest', {
+    headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': 'false' }
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(data){
+    roster = (data && Array.isArray(data.members)) ? data.members : [];
+    setSyncState('ok', 'LIVE · ' + roster.length + ' MEMBERS');
+    renderRoster();
+  })
+  .catch(function(){
+    setSyncState('err', 'CONNECTION ERROR');
+  });
+}
+
+/* ── JSONBin 쓰기 ── */
+function saveRoster(){
+  setSyncState('loading', 'SAVING...');
+  return fetch(BIN_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type':'application/json', 'X-Master-Key': API_KEY },
+    body: JSON.stringify({ members: roster })
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(){
+    setSyncState('ok', 'LIVE · ' + roster.length + ' MEMBERS');
+  })
+  .catch(function(){
+    setSyncState('err', 'SAVE FAILED');
+    showToast('저장에 실패했어요. 다시 시도해 주세요.', true);
+  });
+}
+
+/* ── 자동 폴링 ── */
+function startPolling(){
+  if(pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(function(){ fetchRoster(true); }, POLL_MS);
+}
+
+/* ── 아이디 입력 ── */
+['nick','tag'].forEach(function(id){
+  $id(id).addEventListener('input', onIdChange);
+});
+function onIdChange(){
+  var ok = getNick() && getTag();
+  var link = $id('opgg-link');
+  if(ok){
+    link.href = 'https://www.op.gg/summoners/kr/' + encodeURIComponent(getNick()) + '-' + encodeURIComponent(getTag());
+    link.classList.add('on');
+  } else {
+    link.href = '#'; link.classList.remove('on');
+  }
+  $id('step1-next').disabled = !ok;
+}
+$id('opgg-link').addEventListener('click', function(e){ if(!this.classList.contains('on')) e.preventDefault(); });
+
+/* ── 스텝 이동 ── */
+function goStep(n){
+  $id('page' + curStep).classList.remove('active');
+  $id('page' + n).classList.add('active');
+  [1,2,3,4].forEach(function(i){
+    var num = $id('sn' + i), lbl = $id('sl' + i);
+    num.classList.remove('active','done'); lbl.classList.remove('active');
+    if(i < n){ num.classList.add('done'); num.textContent = '✓'; }
+    else if(i === n){ num.classList.add('active'); num.textContent = i; lbl.classList.add('active'); }
+    else{ num.textContent = i; }
+  });
+  curStep = n;
+  if(n === 3) updatePreview();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ── 티어 선택 ── */
+function selTier(btn){
+  document.querySelectorAll('.tier-btn').forEach(function(b){ b.classList.remove('sel'); });
+  btn.classList.add('sel');
+  curTier = btn.dataset.tier; curScore = parseInt(btn.dataset.score, 10); curColor = btn.dataset.color;
+  $id('step2-next').disabled = false;
+}
+
+/* ── 주 포지션 ── */
+function selMainPos(btn){
+  if(curSub === btn.dataset.pos){
+    curSub = null;
+    document.querySelectorAll('#sub-pos-grid .pos-btn').forEach(function(b){ b.classList.remove('sub-sel'); });
+  }
+  document.querySelectorAll('#main-pos-grid .pos-btn').forEach(function(b){ b.classList.remove('main-sel'); });
+  btn.classList.add('main-sel');
+  curMain = btn.dataset.pos;
+  checkPosReady(); updatePreview();
+}
+
+/* ── 부 포지션 ── */
+function selSubPos(btn){
+  if(curMain === btn.dataset.pos){ showToast('주 포지션과 다른 포지션을 선택해 주세요'); return; }
+  document.querySelectorAll('#sub-pos-grid .pos-btn').forEach(function(b){ b.classList.remove('sub-sel'); });
+  btn.classList.add('sub-sel');
+  curSub = btn.dataset.pos;
+  checkPosReady(); updatePreview();
+}
+
+function checkPosReady(){
+  $id('step3-confirm').disabled = !curMain;
+  var hint = $id('pos-hint');
+  if(!curMain) hint.textContent = '주 포지션과 다른 포지션을 선택하세요';
+  else if(!curSub) hint.textContent = '부 포지션은 선택하지 않아도 됩니다';
+  else hint.textContent = curMain + ' (주) · ' + curSub + ' (부)';
+}
+
+/* ── 미리보기 ── */
+function updatePreview(){
+  if(!curTier) return;
+  var card = $id('preview'); card.style.display = 'block';
+  var rgb = hexRgb(curColor);
+  var em = $id('pv-em');
+  em.textContent = ICONS[curTier] || '?';
+  em.style.borderColor = curColor; em.style.color = curColor;
+  em.style.background = 'rgba(' + rgb + ',.12)';
+  $id('pv-id').textContent = getFullId();
+  var pt = $id('pv-tier'); pt.textContent = curTier; pt.style.color = curColor;
+  var pp = $id('pv-pos'); pp.innerHTML = '';
+  if(curMain){ var t = document.createElement('span'); t.className = 'pv-pos-tag pv-main'; t.textContent = '주 ' + curMain; pp.appendChild(t); }
+  if(curSub){ var t2 = document.createElement('span'); t2.className = 'pv-pos-tag pv-sub'; t2.textContent = '부 ' + curSub; pp.appendChild(t2); }
+}
+
+/* ── 등록 ── */
+function confirmAdd(){
+  var id = getFullId();
+  if(roster.find(function(m){ return m.id.toLowerCase() === id.toLowerCase(); })){
+    showToast('이미 등록된 소환사입니다'); return;
+  }
+  var opgg = 'https://www.op.gg/summoners/kr/' + encodeURIComponent(getNick()) + '-' + encodeURIComponent(getTag());
+  var newMember = { id:id, nick:getNick(), tier:curTier, score:curScore, color:curColor, main:curMain, sub:curSub||null, opgg:opgg };
+  roster.push(newMember);
+
+  saveRoster().then(function(){
+    showToast(getNick() + ' 님이 명단에 등록되었습니다!');
+    renderRoster();
+  });
+
+  /* 폼 리셋 */
+  $id('nick').value = ''; $id('tag').value = '';
+  curTier = null; curScore = 0; curColor = '#8C9BAA'; curMain = null; curSub = null;
+  document.querySelectorAll('.tier-btn,.pos-btn').forEach(function(b){ b.classList.remove('sel','main-sel','sub-sel'); });
+  $id('preview').style.display = 'none';
+  $id('step3-confirm').disabled = true; $id('step2-next').disabled = true; $id('step1-next').disabled = true;
+  $id('opgg-link').classList.remove('on'); $id('opgg-link').href = '#';
+  $id('pos-hint').textContent = '주 포지션과 다른 포지션을 선택하세요';
+
+  goStep(1);
+}
+
+/* ── 삭제 ── */
+function removeMember(i){
+  var name = roster[i].nick;
+  roster.splice(i, 1);
+  saveRoster().then(function(){
+    showToast(name + ' 님을 명단에서 삭제했습니다');
+    renderRoster();
+  });
+}
+
+/* ── 명단 렌더 ── */
+function renderRoster(){
+  $id('r-badge').textContent = roster.length + '명';
+  $id('loading-bar').style.display = 'none';
+  var list = $id('roster-list');
+  if(!roster.length){
+    list.innerHTML = '<div class="empty"><span class="empty-ico">👥</span>아직 등록된 멤버가 없습니다<br>위에서 소환사 정보를 입력해 주세요</div>';
+    return;
+  }
+  list.innerHTML = roster.map(function(m, i){
+    var icon = ICONS[m.tier] || '?';
+    var rgb = hexRgb(m.color);
+    var tStyle = 'color:' + m.color + ';border-color:' + m.color + ';background:rgba(' + rgb + ',.1)';
+    return '<div class="mrow">'
+      + '<span class="m-num">' + (i+1) + '</span>'
+      + '<div class="m-em" style="border-color:' + m.color + ';color:' + m.color + ';background:rgba(' + rgb + ',.1)">' + icon + '</div>'
+      + '<div class="m-info">'
+        + '<div class="m-name">' + esc(m.id) + '</div>'
+        + '<div class="m-meta">'
+          + '<span class="m-tag tier-tag" style="' + tStyle + '">' + esc(m.tier) + '</span>'
+          + (m.main ? '<span class="m-tag main-tag">주 ' + esc(m.main) + '</span>' : '')
+          + (m.sub  ? '<span class="m-tag sub-tag">부 '  + esc(m.sub)  + '</span>' : '')
+        + '</div>'
+      + '</div>'
+      + '<div class="m-actions">'
+        + '<a class="m-opgg" href="' + esc(m.opgg) + '" target="_blank" rel="noopener" title="OP.GG">↗</a>'
+        + '<button class="m-del" onclick="removeMember(' + i + ')" aria-label="삭제">✕</button>'
+      + '</div>'
+    + '</div>';
+  }).join('');
+}
+
+/* ── 토스트 ── */
+function showToast(msg, isErr){
+  var t = $id('toast');
+  t.textContent = msg;
+  t.className = 'toast on' + (isErr ? ' err' : '');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(function(){ t.classList.remove('on'); }, 2600);
+}
+
+/* ── 전역 노출 ── */
+window.goStep = goStep;
+window.selTier = selTier;
+window.selMainPos = selMainPos;
+window.selSubPos = selSubPos;
+window.confirmAdd = confirmAdd;
+window.removeMember = removeMember;
+
+/* ── 초기화 ── */
+$id('loading-bar').style.display = 'block';
+fetchRoster(false).then(function(){
+  startPolling();
+});
+
+})();
+</script>
+</body>
+</html>
