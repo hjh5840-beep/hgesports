@@ -565,10 +565,8 @@ html,body{min-height:100vh;background:var(--c-bg);font-family:var(--font-ko);col
 (function(){
 'use strict';
 
-/* ── JSONBin 설정 ── */
-var BIN_ID  = '6a30f1bef5f4af5e29f981a8';
-var API_KEY = '$2a$10$UM5GTb0PzchDqj64cVKVBOVWg8r1EOvbvF749zM54MimO5xvSlhNG';
-var BIN_URL = 'https://api.jsonbin.io/v3/b/' + BIN_ID;
+/* ── Firebase 설정 ── */
+var FIREBASE_URL = 'https://hge-roster-default-rtdb.asia-southeast1.firebasedatabase.app/members.json';
 
 /* ── 상수 ── */
 var ICONS = {챌린저:'C',그랜드마스터:'GM',마스터:'M',다이아몬드:'D',에메랄드:'E',플래티넘:'P',골드:'G',실버:'S',브론즈:'B',아이언:'I'};
@@ -595,38 +593,59 @@ function setSyncState(state, text){
   txt.textContent = text;
 }
 
-/* ── JSONBin 읽기 ── */
+/* ── Firebase 읽기 ── */
+var lastFetchFailed = false;
+
 function fetchRoster(silent){
   if(!silent) setSyncState('loading', 'SYNCING...');
-  return fetch(BIN_URL + '/latest', {
-    headers: { 'X-Master-Key': API_KEY, 'X-Bin-Meta': 'false' }
+  return fetch(FIREBASE_URL)
+  .then(function(r){
+    if(!r.ok){ throw new Error('HTTP '+r.status); }
+    return r.json();
   })
-  .then(function(r){ return r.json(); })
   .then(function(data){
-    roster = (data && Array.isArray(data.members)) ? data.members : [];
+    lastFetchFailed = false;
+    roster = Array.isArray(data) ? data.filter(Boolean) : [];
     setSyncState('ok', 'LIVE · ' + roster.length + ' MEMBERS');
     renderRoster();
   })
-  .catch(function(){
+  .catch(function(err){
+    lastFetchFailed = true;
     setSyncState('err', 'CONNECTION ERROR');
+    renderConnectionError();
   });
 }
 
-/* ── JSONBin 쓰기 ── */
+function renderConnectionError(){
+  var list = document.getElementById('roster-list');
+  if(!list) return;
+  list.innerHTML = '<div class="empty"><span class="empty-ico">⚠️</span>서버 연결에 실패했어요<br>잠시 후 다시 시도해 주세요<br>'
+    + '<button onclick="fetchRoster(false)" style="margin-top:10px;padding:8px 16px;background:var(--gold-dim);border:none;border-radius:var(--radius);color:var(--gold-3);font-size:12px;font-family:var(--font-ko);cursor:pointer;">다시 시도</button></div>';
+}
+
+/* ── Firebase 쓰기 ── */
 function saveRoster(){
+  if(lastFetchFailed){
+    showToast('서버 연결이 불안정해요. 새로고침 후 다시 시도해 주세요.', true);
+    return Promise.reject(new Error('blocked: last fetch failed'));
+  }
   setSyncState('loading', 'SAVING...');
-  return fetch(BIN_URL, {
+  return fetch(FIREBASE_URL, {
     method: 'PUT',
-    headers: { 'Content-Type':'application/json', 'X-Master-Key': API_KEY },
-    body: JSON.stringify({ members: roster })
+    headers: { 'Content-Type':'application/json' },
+    body: JSON.stringify(roster)
   })
-  .then(function(r){ return r.json(); })
+  .then(function(r){
+    if(!r.ok){ throw new Error('HTTP '+r.status); }
+    return r.json();
+  })
   .then(function(){
     setSyncState('ok', 'LIVE · ' + roster.length + ' MEMBERS');
   })
-  .catch(function(){
+  .catch(function(err){
     setSyncState('err', 'SAVE FAILED');
-    showToast('저장에 실패했어요. 다시 시도해 주세요.', true);
+    showToast('저장에 실패했어요. 잠시 후 다시 시도해 주세요.', true);
+    throw err;
   });
 }
 
@@ -732,8 +751,14 @@ function confirmAdd(){
   var newMember = { id:id, nick:getNick(), tier:curTier, score:curScore, color:curColor, main:curMain, sub:curSub||null, opgg:opgg };
   roster.push(newMember);
 
+  var nickForToast = getNick();
   saveRoster().then(function(){
-    showToast(getNick() + ' 님이 명단에 등록되었습니다!');
+    showToast(nickForToast + ' 님이 명단에 등록되었습니다!');
+    renderRoster();
+  }).catch(function(){
+    /* 저장 실패 시 롤백 */
+    var idx = roster.indexOf(newMember);
+    if(idx>-1) roster.splice(idx,1);
     renderRoster();
   });
 
@@ -751,10 +776,16 @@ function confirmAdd(){
 
 /* ── 삭제 ── */
 function removeMember(i){
-  var name = roster[i].nick;
+  if(!isAdmin){showToast("관리자만 삭제할 수 있어요");return;}
+  var removed = roster[i];
+  var name = removed.nick;
   roster.splice(i, 1);
   saveRoster().then(function(){
     showToast(name + ' 님을 명단에서 삭제했습니다');
+    renderRoster();
+  }).catch(function(){
+    /* 저장 실패 시 롤백 */
+    roster.splice(i, 0, removed);
     renderRoster();
   });
 }
